@@ -1,0 +1,18 @@
+server:
+  port: 9001
+spring:
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://xxxx:3306/db_pomelo
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+logging:
+  level:
+    cn.ikangjia.pomelo.domain.mapper: debug
+
+mybatis-plus:
+  global-config:
+    banner: off
