@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @since 2022/10/10 12:37
  */
 @Data
-@TableName("t_user")
+@TableName(value = "t_user", excludeProperty={"code"})
 public class UserDO {
     private Long id;
     private String name;
@@ -32,4 +32,6 @@ public class UserDO {
 
     @TableField("is_deleted")
     private boolean deleted;
+
+    private String code;
 }
