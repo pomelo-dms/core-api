@@ -13,12 +13,13 @@ import java.util.Random;
  * @since 2022/10/12 16:40
  */
 public class VerificationCode {
-    private int width = 100;// 生成验证码图片的宽度
-    private int height = 30;// 生成验证码图片的高度
-    private String[] fontNames = { "宋体", "楷体", "隶书", "微软雅黑" };
-    private Color bgColor = new Color(255, 255, 255);// 定义验证码图片的背景颜色为白色
-    private Random random = new Random();
-    private String codes = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final int width = 100;// 生成验证码图片的宽度
+    private final int height = 30;// 生成验证码图片的高度
+    private final String[] fontNames = { "宋体", "楷体", "隶书", "微软雅黑" };
+    private final Color bgColor = new Color(255, 255, 255);// 定义验证码图片的背景颜色为白色
+    private final Random random = new Random();
+//    private final String codes = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final String codes = "0123456789";
     private String text;// 记录随机字符串
 
     /**
@@ -70,7 +71,7 @@ public class VerificationCode {
     public BufferedImage getImage() {
         BufferedImage image = createImage();
         Graphics2D g2 = (Graphics2D) image.getGraphics();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 4; i++) {
             String s = randomChar() + "";
             sb.append(s);
