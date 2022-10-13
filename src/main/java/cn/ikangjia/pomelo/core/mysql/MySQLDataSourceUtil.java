@@ -1,4 +1,4 @@
-package cn.ikangjia.pomelo.core;
+package cn.ikangjia.pomelo.core.mysql;
 
 import cn.ikangjia.pomelo.domain.entity.DataSourceDO;
 
@@ -14,6 +14,17 @@ import java.sql.Statement;
  */
 public class MySQLDataSourceUtil {
     private static final String URL_TEMPLATE = "jdbc:mysql://%s:%s";
+
+    public static Connection getConnection(DataSourceDO dataSourceDO) throws SQLException {
+        String username = dataSourceDO.getUsername();
+        String password = dataSourceDO.getPassword();
+        String host = dataSourceDO.getHost();
+        String port = dataSourceDO.getPort();
+
+
+        String url = String.format(URL_TEMPLATE, host, port);
+        return DriverManager.getConnection(url, username, password);
+    }
 
     public static Boolean testConnection(DataSourceDO dataSourceDO) throws SQLException {
         return testConnection(dataSourceDO.getHost(), dataSourceDO.getPort(), dataSourceDO.getUsername(), dataSourceDO.getPassword());

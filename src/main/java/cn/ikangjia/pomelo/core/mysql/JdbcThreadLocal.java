@@ -1,4 +1,4 @@
-package cn.ikangjia.pomelo.core;
+package cn.ikangjia.pomelo.core.mysql;
 
 import org.springframework.stereotype.Component;
 

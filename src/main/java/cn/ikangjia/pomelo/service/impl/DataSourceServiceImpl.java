@@ -3,7 +3,7 @@ package cn.ikangjia.pomelo.service.impl;
 import cn.ikangjia.pomelo.api.query.PageQuery;
 import cn.ikangjia.pomelo.api.vo.DataSourceVO;
 import cn.ikangjia.pomelo.api.vo.TestConnectionVO;
-import cn.ikangjia.pomelo.core.MySQLDataSourceUtil;
+import cn.ikangjia.pomelo.core.mysql.MySQLDataSourceUtil;
 import cn.ikangjia.pomelo.domain.entity.DataSourceDO;
 import cn.ikangjia.pomelo.domain.mapper.DataSourceMapper;
 import cn.ikangjia.pomelo.service.DataSourceService;
@@ -12,7 +12,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.List;
