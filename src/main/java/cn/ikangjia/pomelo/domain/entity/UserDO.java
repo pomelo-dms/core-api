@@ -1,7 +1,10 @@
 package cn.ikangjia.pomelo.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @TableName(value = "t_user", excludeProperty={"code"})
 public class UserDO {
-    private Long id;
+    private long id;
     private String name;
     private String account;
     private String password;
@@ -22,7 +25,10 @@ public class UserDO {
     private String phone;
     private String email;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     /*
