@@ -1,6 +1,6 @@
 package cn.ikangjia.pomelo.manager;
 
-import cn.ikangjia.pomelo.core.mysql.entity.DatabaseEntity;
+import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 
 import java.util.List;
 

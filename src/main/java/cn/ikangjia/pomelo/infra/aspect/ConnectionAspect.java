@@ -1,7 +1,7 @@
 package cn.ikangjia.pomelo.infra.aspect;
 
-import cn.ikangjia.pomelo.core.mysql.JdbcThreadLocal;
-import cn.ikangjia.pomelo.core.mysql.MySQLDataSourceUtil;
+import cn.ikangjia.pomelo.core.JdbcThreadLocal;
+import cn.ikangjia.pomelo.core.MySQLDataSourceUtil;
 import cn.ikangjia.pomelo.domain.entity.DataSourceDO;
 import cn.ikangjia.pomelo.domain.mapper.DataSourceMapper;
 import lombok.extern.slf4j.Slf4j;

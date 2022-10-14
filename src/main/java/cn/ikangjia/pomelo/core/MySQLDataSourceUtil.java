@@ -1,4 +1,4 @@
-package cn.ikangjia.pomelo.core.mysql;
+package cn.ikangjia.pomelo.core;
 
 import cn.ikangjia.pomelo.domain.entity.DataSourceDO;
 

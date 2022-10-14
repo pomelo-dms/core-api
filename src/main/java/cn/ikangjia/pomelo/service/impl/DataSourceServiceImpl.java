@@ -3,7 +3,7 @@ package cn.ikangjia.pomelo.service.impl;
 import cn.ikangjia.pomelo.api.query.PageQuery;
 import cn.ikangjia.pomelo.api.vo.DataSourceVO;
 import cn.ikangjia.pomelo.api.vo.TestConnectionVO;
-import cn.ikangjia.pomelo.core.mysql.MySQLDataSourceUtil;
+import cn.ikangjia.pomelo.core.MySQLDataSourceUtil;
 import cn.ikangjia.pomelo.domain.entity.DataSourceDO;
 import cn.ikangjia.pomelo.domain.mapper.DataSourceMapper;
 import cn.ikangjia.pomelo.service.DataSourceService;
