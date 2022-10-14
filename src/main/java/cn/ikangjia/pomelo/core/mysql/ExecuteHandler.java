@@ -1,6 +1,7 @@
 package cn.ikangjia.pomelo.core.mysql;
 
 import cn.ikangjia.pomelo.core.DMSException;
+import cn.ikangjia.pomelo.core.mysql.entity.DataEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -27,13 +28,34 @@ public class ExecuteHandler {
         this.jdbcThreadLocal = jdbcThreadLocal;
     }
 
-    public void execute(String sql) {
+    /**
+     * 可用于执行任何 SQL 语句，返回一个 boolean 值，表明执行该 SQL 语句是否返回了 ResultSet
+     *
+     * @param sql sql 语句
+     * @return 执行结果有 ResultSet 则返回 true，没有则返回 false
+     */
+    public boolean execute(String sql) {
         try (Statement statement = this.getStatement()) {
-            statement.execute(sql);
+            return statement.execute(sql);
         } catch (SQLException e) {
             throw new DMSException(e.getMessage(), e);
         }
     }
+
+    /**
+     * 执行 INSERT、UPDATE 或 DELETE 语句以及 SQL DDL（数据定义语言）语句
+     *
+     * @param sql 要执行的 sql 语句
+     * @return 执行结果。INSERT、UPDATE 或 DELETE 返回受影响行数，DDL 返回 0
+     */
+    public Integer executeUpdate(String sql) {
+        try (Statement statement = this.getStatement()) {
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DMSException(e.getMessage(), e);
+        }
+    }
+
 
     public List<Object> executeQuery(Class t, String sql, String... params) {
         try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
@@ -42,6 +64,31 @@ public class ExecuteHandler {
         } catch (SQLException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    public List<Map<String, Object>> executeQuery(String sql, String... params) {
+        try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
+            ResultSet rs = statement.executeQuery();
+            return doMapResult(rs);
+        } catch (SQLException e) {
+            throw new DMSException(e.getMessage(), e);
+        }
+    }
+
+
+    private List<Map<String, Object>> doMapResult(ResultSet rs) throws SQLException {
+        ResultSetMetaData metaData = rs.getMetaData();
+        int columnCount = metaData.getColumnCount();
+
+        List<Map<String, Object>> result = new ArrayList<>(columnCount);
+        while (rs.next()) {
+            Map<String, Object> temMap = new HashMap<>();
+            for (int i = 0; i < columnCount; i++) {
+                temMap.put(metaData.getColumnLabel(i + 1), rs.getObject(i + 1));
+            }
+            result.add(temMap);
+        }
+        return result;
     }
 
     private List<Object> doObjectResult(Class t, ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException {
@@ -61,31 +108,6 @@ public class ExecuteHandler {
         }
         return result;
     }
-
-    public List<Map<String, Object>> executeQuery(String sql, String... params) {
-        try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
-            ResultSet rs = statement.executeQuery();
-            return doMapResult(rs);
-        } catch (SQLException e) {
-            throw new DMSException(e.getMessage(), e);
-        }
-    }
-
-    private List<Map<String, Object>> doMapResult(ResultSet rs) throws SQLException {
-        ResultSetMetaData metaData = rs.getMetaData();
-        int columnCount = metaData.getColumnCount();
-
-        List<Map<String, Object>> result = new ArrayList<>(columnCount);
-        while (rs.next()) {
-            Map<String, Object> temMap = new HashMap<>();
-            for (int i = 0; i < columnCount; i++) {
-                temMap.put(metaData.getColumnLabel(i + 1), rs.getObject(i + 1));
-            }
-            result.add(temMap);
-        }
-        return result;
-    }
-
 
     private Statement getStatement() {
         Connection context = jdbcThreadLocal.getContext();
