@@ -1,4 +1,4 @@
-package cn.ikangjia.pomelo.core.mysql.constants;
+package cn.ikangjia.pomelo.core.constants;
 
 /**
  * @author kangJia

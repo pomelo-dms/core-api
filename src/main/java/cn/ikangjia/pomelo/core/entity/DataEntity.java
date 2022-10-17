@@ -1,4 +1,4 @@
-package cn.ikangjia.pomelo.core.mysql.entity;
+package cn.ikangjia.pomelo.core.entity;
 
 import lombok.Data;
 

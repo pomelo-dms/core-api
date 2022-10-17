@@ -2,7 +2,7 @@ package cn.ikangjia.pomelo.service.impl;
 
 import cn.ikangjia.pomelo.api.dto.DatabaseAddDTO;
 import cn.ikangjia.pomelo.api.dto.DatabaseAlterDTO;
-import cn.ikangjia.pomelo.core.mysql.entity.DatabaseEntity;
+import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import cn.ikangjia.pomelo.service.DatabaseService;
 import lombok.extern.slf4j.Slf4j;

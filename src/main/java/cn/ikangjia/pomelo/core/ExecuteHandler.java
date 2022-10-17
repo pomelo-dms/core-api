@@ -1,7 +1,5 @@
-package cn.ikangjia.pomelo.core.mysql;
+package cn.ikangjia.pomelo.core;
 
-import cn.ikangjia.pomelo.core.DMSException;
-import cn.ikangjia.pomelo.core.mysql.entity.DataEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

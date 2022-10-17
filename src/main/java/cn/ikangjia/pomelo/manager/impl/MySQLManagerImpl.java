@@ -1,7 +1,7 @@
 package cn.ikangjia.pomelo.manager.impl;
 
-import cn.ikangjia.pomelo.core.mysql.ExecuteHandler;
-import cn.ikangjia.pomelo.core.mysql.entity.DatabaseEntity;
+import cn.ikangjia.pomelo.core.ExecuteHandler;
+import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import org.springframework.stereotype.Service;
 
