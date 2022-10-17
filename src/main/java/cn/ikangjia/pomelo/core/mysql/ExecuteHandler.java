@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,15 +57,53 @@ public class ExecuteHandler {
         }
     }
 
-
-    public List<Object> executeQuery(Class t, String sql, String... params) {
+    public <T> List<T> executeQuery(Class<T> t, String sql, String... params) {
         try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
             ResultSet rs = statement.executeQuery();
             return doObjectResult(t, rs);
         } catch (SQLException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e.getMessage(), e);
+        } catch (InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
+
+    /**
+     * 查询某表的数据
+     *
+     * @param sql    sql
+     * @param params 参数
+     * @return 数据
+     */
+    public DataEntity executeQueryForData(String sql, String... params) {
+        DataEntity result = new DataEntity();
+        List<String> columnNameList = new ArrayList<>();
+        List<Map<String, Object>> dataListMap;
+
+        try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
+            ResultSet rs = statement.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                columnNameList.add(metaData.getColumnLabel(i));
+            }
+            dataListMap = doMapResult(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        result.setDataMapList(dataListMap);
+        result.setColumnNameList(columnNameList);
+        return result;
+    }
+
+//    public List<Object> executeQuery(Class t, String sql, String... params) {
+//        try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
+//            ResultSet rs = statement.executeQuery();
+//            return doObjectResult(t, rs);
+//        } catch (SQLException | InstantiationException | IllegalAccessException e) {
+//            throw new RuntimeException(e.getMessage(), e);
+//        }
+//    }
 
     public List<Map<String, Object>> executeQuery(String sql, String... params) {
         try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
@@ -91,20 +130,20 @@ public class ExecuteHandler {
         return result;
     }
 
-    private List<Object> doObjectResult(Class t, ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException {
+    private <T> List<T> doObjectResult(Class<T> t, ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         ResultSetMetaData metaData = rs.getMetaData();
         int columnCount = metaData.getColumnCount();
 
         Field[] fields = t.getDeclaredFields();
 
-        List<Object> result = new ArrayList<>(columnCount);
+        List<T> result = new ArrayList<>(columnCount);
         while (rs.next()) {
-            Object o = t.newInstance();
+            T obj = t.getDeclaredConstructor().newInstance();
             for (Field field : fields) {
                 field.setAccessible(true);
-                field.set(o, String.valueOf(rs.getObject(field.getName())));
+                field.set(obj, String.valueOf(rs.getObject(field.getName())));
             }
-            result.add(o);
+            result.add(obj);
         }
         return result;
     }
