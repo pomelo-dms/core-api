@@ -38,14 +38,18 @@ public class UserController {
 
     @PostMapping("/doLogin")
     public ResultVO<UserVO> getUser(HttpServletRequest  request, @RequestBody UserDO userDO) {
-        String inputCode = userDO.getCode();
-        String originalCode = (String)request.getSession().getAttribute("code");
-        if (!StringUtils.hasText(inputCode)) {
-            return ResultVO.error("请输入验证码");
-        }
-        if (!originalCode.equalsIgnoreCase(inputCode)) {
-            throw new RuntimeException("验证码错误");
-        }
+//        String inputCode = userDO.getCode();
+//        HttpSession session = request.getSession();
+//        String originalCode = (String)session.getAttribute("code");
+//        if (!StringUtils.hasText(originalCode)) {
+//            throw new RuntimeException("Session 不支持");
+//        }
+//        if (!StringUtils.hasText(inputCode)) {
+//            return ResultVO.error("请输入验证码");
+//        }
+//        if (!originalCode.equalsIgnoreCase(inputCode)) {
+//            throw new RuntimeException("验证码错误");
+//        }
         return Optional.ofNullable(userService.doLogin(userDO))
                 .map(ResultVO::success)
                 .orElseThrow();
