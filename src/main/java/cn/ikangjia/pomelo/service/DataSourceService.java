@@ -2,6 +2,7 @@ package cn.ikangjia.pomelo.service;
 
 import cn.ikangjia.pomelo.api.query.PageQuery;
 import cn.ikangjia.pomelo.api.vo.DataSourceVO;
+import cn.ikangjia.pomelo.api.vo.TestConnectionVO;
 import cn.ikangjia.pomelo.domain.entity.DataSourceDO;
 
 import java.util.List;
@@ -31,6 +32,6 @@ public interface DataSourceService {
      * @param dataSourceDO 数据源信息
      * @return 测试结果
      */
-    Boolean testConnection(DataSourceDO dataSourceDO);
+    TestConnectionVO testConnection(DataSourceDO dataSourceDO);
 
 }

@@ -1,0 +1,38 @@
+package cn.ikangjia.pomelo.core.sqlbuilder;
+
+/**
+ * @author kangJia
+ * @email ikangjia.cn@outlook.com
+ * @since 2022/10/13 13:58
+ */
+public interface DatabaseSQLBuilder {
+    String database_use = "use %s;";
+
+    String database_show = "show databases;";
+    String database_version = "show version();";
+    String database_ddl = "show create database %s;";
+
+    String database_drop = "drop database %s;";
+
+    String database_alter = "alter schema %s collate %s;";
+
+    String database_create_1 = "create database %s;";
+    String database_create_2 = "create database %s default character set %s;";
+    String database_create_3 = "create database %s default character set %s default collate %s;";
+
+
+    String database_info = """
+           select schema_name as databaseName, default_character_set_name as characterName,
+           default_collation_name as collationName, sql_path as sqlPath
+           from information_schema.schemata
+           where schema_name = %s;
+            """;
+    String database_table_count = """
+            select count(*) as tableCount from information_schema.tables
+            where table_type = 'base table' and table_schema = %s;
+            """;
+    String database_view_count = """
+            select count(*) as tableCount from information_schema.tables
+            where table_type in ('view', 'system view') and table_schema = %s;
+            """;
+}

@@ -3,6 +3,7 @@ package cn.ikangjia.pomelo.api.controller;
 import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.query.PageQuery;
 import cn.ikangjia.pomelo.api.vo.DataSourceVO;
+import cn.ikangjia.pomelo.api.vo.TestConnectionVO;
 import cn.ikangjia.pomelo.domain.entity.DataSourceDO;
 import cn.ikangjia.pomelo.service.DataSourceService;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.Optional;
  * @since 2022/10/5 22:41
  */
 @RestController
-@RequestMapping("/dataSource")
+@RequestMapping("/api/v1/dataSource")
 public class DataSourceController {
 
     private final DataSourceService dataSourceService;
@@ -33,7 +34,11 @@ public class DataSourceController {
     }
 
     @GetMapping
-    public ResultVO<DataSourceVO> listDataSource(@RequestBody PageQuery pageQuery){
+    public ResultVO<DataSourceVO> listDataSource(Integer pageSize, Integer pageNum, String keyword){
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setKeyword(keyword);
         return Optional.ofNullable(dataSourceService.listDataSource(pageQuery))
                 .map(ResultVO::success)
                 .orElseThrow();
@@ -46,8 +51,8 @@ public class DataSourceController {
                 .orElseThrow();
     }
 
-    @DeleteMapping("/{dataSourceId}")
-    public ResultVO<Boolean> removeDataSource(@PathVariable Long dataSourceId){
+    @DeleteMapping
+    public ResultVO<Boolean> removeDataSource(Long dataSourceId){
         return Optional.ofNullable(dataSourceService.removeDataSource(dataSourceId))
                 .map(ResultVO::success)
                 .orElseThrow();
@@ -68,13 +73,13 @@ public class DataSourceController {
     }
 
     /**
-     * 测试 MySQL 数据源的连通性
+     * 测试数据源的连通性
      *
      * @param dataSourceDO 数据源信息
      * @return 测试结果
      */
     @PostMapping("/testConnection")
-    public ResultVO<Boolean> testConnection(@RequestBody DataSourceDO dataSourceDO){
+    public ResultVO<TestConnectionVO> testConnection(@RequestBody DataSourceDO dataSourceDO){
         return Optional.ofNullable(dataSourceService.testConnection(dataSourceDO))
                 .map(ResultVO::success)
                 .orElseThrow();

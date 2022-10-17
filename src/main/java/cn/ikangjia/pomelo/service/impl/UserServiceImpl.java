@@ -1,5 +1,6 @@
 package cn.ikangjia.pomelo.service.impl;
 
+import cn.ikangjia.pomelo.api.vo.UserVO;
 import cn.ikangjia.pomelo.domain.entity.UserDO;
 import cn.ikangjia.pomelo.domain.mapper.UserMapper;
 import cn.ikangjia.pomelo.service.UserService;
@@ -7,6 +8,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String doLogin(UserDO userDO) {
+    public UserVO doLogin(UserDO userDO) {
         LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserDO::getAccount, userDO.getAccount())
                 .eq(UserDO::getPassword, userDO.getPassword());
@@ -46,8 +48,13 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("内部错误！可能是用户名重复，请联系管理员！");
         }
         UserDO userDetail = userDOList.get(0);
-        return JWT.create().withAudience(String.valueOf(userDetail.getId()))
+        String token = JWT.create().withAudience(String.valueOf(userDetail.getId()))
                 .withExpiresAt(LocalDateTime.now().plusMinutes(120L).toInstant(ZoneOffset.UTC))
                 .sign(Algorithm.HMAC256(userDetail.getPassword()));
+
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(userDetail, userVO);
+        userVO.setToken(token);
+        return userVO;
     }
 }
