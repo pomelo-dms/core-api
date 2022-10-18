@@ -51,8 +51,8 @@ public class DataSourceController {
                 .orElseThrow();
     }
 
-    @DeleteMapping
-    public ResultVO<Boolean> removeDataSource(Long dataSourceId){
+    @DeleteMapping("/{dataSourceId}")
+    public ResultVO<Boolean> removeDataSource(@PathVariable Long dataSourceId){
         return Optional.ofNullable(dataSourceService.removeDataSource(dataSourceId))
                 .map(ResultVO::success)
                 .orElseThrow();
