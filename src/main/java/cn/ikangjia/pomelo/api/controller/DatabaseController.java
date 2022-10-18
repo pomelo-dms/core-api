@@ -3,6 +3,7 @@ package cn.ikangjia.pomelo.api.controller;
 import cn.ikangjia.pomelo.api.dto.DatabaseAddDTO;
 import cn.ikangjia.pomelo.api.dto.DatabaseAlterDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
+import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.service.DatabaseService;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,14 @@ public class DatabaseController {
         this.databaseService = databaseService;
     }
 
-    @GetMapping
-    public ResultVO<List<String>> listDatabases(Long dataSourceId) {
+    @GetMapping("/tree0")
+    public ResultVO<List<TreeVO>> listDatabases(Long dataSourceId) {
         return ResultVO.success(databaseService.listDatabases(dataSourceId));
+    }
+
+    @GetMapping("/tree1")
+    public ResultVO<List<TreeVO>> listTree1(String databaseName, Long dataSourceId) {
+        return ResultVO.success(databaseService.listTree1(databaseName, dataSourceId));
     }
 
     @GetMapping("/{databaseName}")

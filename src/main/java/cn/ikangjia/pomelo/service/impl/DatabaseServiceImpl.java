@@ -2,6 +2,8 @@ package cn.ikangjia.pomelo.service.impl;
 
 import cn.ikangjia.pomelo.api.dto.DatabaseAddDTO;
 import cn.ikangjia.pomelo.api.dto.DatabaseAlterDTO;
+import cn.ikangjia.pomelo.api.vo.TreeVO;
+import cn.ikangjia.pomelo.common.util.TreeUtil;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import cn.ikangjia.pomelo.service.DatabaseService;
@@ -25,8 +27,9 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public List<String> listDatabases(Long dataSourceId) {
-        return mySQLManager.listDatabase(dataSourceId, true);
+    public List<TreeVO> listDatabases(Long dataSourceId) {
+        List<String> dbNameList = mySQLManager.listDatabase(dataSourceId, true);
+        return TreeUtil.buildLevel0(dataSourceId, dbNameList);
     }
 
     @Override
@@ -47,5 +50,10 @@ public class DatabaseServiceImpl implements DatabaseService {
     @Override
     public Boolean alterDatabase(DatabaseAlterDTO alterDTO) {
         return false;
+    }
+
+    @Override
+    public List<TreeVO> listTree1(String databaseName, Long dataSourceId) {
+        return TreeUtil.buildLevel1(dataSourceId, databaseName);
     }
 }
