@@ -23,5 +23,5 @@ public interface DatabaseService {
 
     Boolean alterDatabase(DatabaseAlterDTO alterDTO);
 
-    List<TreeVO> listTree1(String databaseName, Long dataSourceId);
+    List<TreeVO> listTree1(Long dataSourceId, String databaseName);
 }

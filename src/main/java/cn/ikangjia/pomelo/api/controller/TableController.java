@@ -3,8 +3,12 @@ package cn.ikangjia.pomelo.api.controller;
 import cn.ikangjia.pomelo.api.dto.TableCreateDTO;
 import cn.ikangjia.pomelo.api.dto.TableDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
-import net.sf.jsqlparser.schema.Table;
+import cn.ikangjia.pomelo.api.vo.TreeVO;
+import cn.ikangjia.pomelo.service.TableService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author kangJia
@@ -15,9 +19,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/table")
 public class TableController {
 
-    @GetMapping
-    public ResultVO<Void> listTables(Long dataSourceId, String databaseName) {
-        return ResultVO.success(null);
+    private final TableService tableService;
+
+    public TableController(TableService tableService) {
+        this.tableService = tableService;
+    }
+
+    @GetMapping("/tree")
+    public ResultVO<List<TreeVO>> listTables(Long dataSourceId, String databaseName) {
+        return Optional.ofNullable(tableService.listTree2Table(dataSourceId, databaseName))
+                .map(ResultVO::success)
+                .orElseThrow();
     }
 
     @GetMapping("/tableInfo")

@@ -32,7 +32,7 @@ public class DatabaseController {
 
     @GetMapping("/tree1")
     public ResultVO<List<TreeVO>> listTree1(String databaseName, Long dataSourceId) {
-        return ResultVO.success(databaseService.listTree1(databaseName, dataSourceId));
+        return ResultVO.success(databaseService.listTree1(dataSourceId, databaseName));
     }
 
     @GetMapping("/{databaseName}")

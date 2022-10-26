@@ -53,7 +53,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public List<TreeVO> listTree1(String databaseName, Long dataSourceId) {
+    public List<TreeVO> listTree1(Long dataSourceId, String databaseName) {
         return TreeUtil.buildLevel1(dataSourceId, databaseName);
     }
 }
