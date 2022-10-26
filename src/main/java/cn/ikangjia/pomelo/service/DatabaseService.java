@@ -2,6 +2,7 @@ package cn.ikangjia.pomelo.service;
 
 import cn.ikangjia.pomelo.api.dto.DatabaseAddDTO;
 import cn.ikangjia.pomelo.api.dto.DatabaseAlterDTO;
+import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @since 2022/10/13 15:19
  */
 public interface DatabaseService {
-    List<String> listDatabases(Long dataSourceId);
+    List<TreeVO> listDatabases(Long dataSourceId);
 
     DatabaseEntity getDatabaseInfo(Long dataSourceId, String databaseName);
 
@@ -22,4 +23,5 @@ public interface DatabaseService {
 
     Boolean alterDatabase(DatabaseAlterDTO alterDTO);
 
+    List<TreeVO> listTree1(Long dataSourceId, String databaseName);
 }

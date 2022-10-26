@@ -18,5 +18,7 @@ public interface MySQLManager {
 
     void getDatabaseInfo(long dataSourceId, String databaseName);
 
-    List<String> listDatabase(long dataSourceId, boolean systemTableShow);
+    List<String> listDatabase(long dataSourceId, boolean systemDatabaseShow);
+
+    List<String> listTable(long dataSourceId, String databaseName);
 }
