@@ -2,12 +2,12 @@ package cn.ikangjia.pomelo.service.impl;
 
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.common.util.TreeUtil;
+import cn.ikangjia.pomelo.core.constants.TableConstants;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import cn.ikangjia.pomelo.service.TableService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

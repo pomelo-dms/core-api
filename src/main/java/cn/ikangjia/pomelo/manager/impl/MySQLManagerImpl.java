@@ -1,8 +1,10 @@
 package cn.ikangjia.pomelo.manager.impl;
 
 import cn.ikangjia.pomelo.core.ExecuteHandler;
+import cn.ikangjia.pomelo.core.constants.TableConstants;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.core.sqlbuilder.TableSQLBuilder;
+import cn.ikangjia.pomelo.core.sqlbuilder.ViewSQLBuilder;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,15 @@ public class MySQLManagerImpl implements MySQLManager {
     @Override
     public List<String> listTable(long dataSourceId, String databaseName) {
         List<Map<String, Object>> query = handler.executeQuery(String.format(TableSQLBuilder.table_select, databaseName));
+        return query.stream()
+                .map(map -> map.get("TABLE_NAME"))
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> listView(long dataSourceId, String databaseName) {
+        List<Map<String, Object>> query = handler.executeQuery(String.format(ViewSQLBuilder.view_select, databaseName));
         return query.stream()
                 .map(map -> map.get("TABLE_NAME"))
                 .map(String::valueOf)

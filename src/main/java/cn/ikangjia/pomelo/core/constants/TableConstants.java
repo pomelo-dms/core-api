@@ -7,8 +7,19 @@ package cn.ikangjia.pomelo.core.constants;
  */
 public interface TableConstants {
     enum TableType{
-        BASE_TABLE,
-        VIEW,
-        SYSTEM_VIEW
+        BASE_TABLE("TABLE_NAME"),
+        VIEW("VIEW"),
+        SYSTEM_VIEW("SYSTEM_VIEW"),
+        ;
+
+        private final String tableType;
+
+        TableType(String tableType) {
+            this.tableType = tableType;
+        }
+
+        public String getTableType() {
+            return tableType;
+        }
     }
 }
