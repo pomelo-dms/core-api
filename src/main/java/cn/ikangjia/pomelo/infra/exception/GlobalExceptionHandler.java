@@ -13,6 +13,15 @@ import java.util.Optional;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(LoginException.class)
+    public ResultVO<String> handlerLoginException(Exception e) {
+        ResultVO<String> resultVO = new ResultVO<>();
+        resultVO.setCode(-1);
+        resultVO.setMsg(e.getMessage());
+        return resultVO;
+    }
+
     @ExceptionHandler(Exception.class)
     public ResultVO<Object> handlerException(Exception e) {
         return Optional.of(e.getMessage())

@@ -4,6 +4,7 @@ import cn.ikangjia.pomelo.api.dto.DatabaseAddDTO;
 import cn.ikangjia.pomelo.api.dto.DatabaseAlterDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
+import cn.ikangjia.pomelo.core.entity.CharacterSetEntity;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.service.DatabaseService;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,20 @@ public class DatabaseController {
     @GetMapping("/{databaseName}")
     public ResultVO<DatabaseEntity> getDatabaseInfo(Long dataSourceId, @PathVariable String databaseName) {
         return Optional.ofNullable(databaseService.getDatabaseInfo(dataSourceId, databaseName))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
+
+    @GetMapping("/characterSet")
+    public ResultVO<List<CharacterSetEntity>> getCharacterSets(Long dataSourceId) {
+        return Optional.ofNullable(databaseService.getCharacterSets(dataSourceId))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
+
+    @GetMapping("/collation")
+    public ResultVO<List<String>> getCharacterSets(Long dataSourceId, String characterSet) {
+        return Optional.ofNullable(databaseService.getCollations(dataSourceId, characterSet))
                 .map(ResultVO::success)
                 .orElseThrow();
     }

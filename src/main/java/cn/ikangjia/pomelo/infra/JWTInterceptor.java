@@ -1,6 +1,7 @@
 package cn.ikangjia.pomelo.infra;
 
 import cn.ikangjia.pomelo.domain.entity.UserDO;
+import cn.ikangjia.pomelo.infra.exception.LoginException;
 import cn.ikangjia.pomelo.service.impl.UserServiceImpl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -45,7 +46,7 @@ public class JWTInterceptor implements HandlerInterceptor {
         try {
             verifier.verify(token);
         } catch (JWTVerificationException e) {
-            throw new RuntimeException("Token 认证失败～");
+            throw new LoginException("Token 认证失败～");
         }
         return true;
     }

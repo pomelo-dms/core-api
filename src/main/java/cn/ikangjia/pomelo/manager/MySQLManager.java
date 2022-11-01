@@ -1,5 +1,6 @@
 package cn.ikangjia.pomelo.manager;
 
+import cn.ikangjia.pomelo.core.entity.CharacterSetEntity;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 
 import java.util.List;
@@ -21,4 +22,10 @@ public interface MySQLManager {
     List<String> listDatabase(long dataSourceId, boolean systemDatabaseShow);
 
     List<String> listTable(long dataSourceId, String databaseName);
+
+    List<String> listView(long dataSourceId, String databaseName);
+
+    List<CharacterSetEntity> listCharacterSets(Long dataSourceId);
+
+    List<String> listCollations(Long dataSourceId, String characterSet);
 }

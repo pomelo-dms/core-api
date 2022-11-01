@@ -11,6 +11,6 @@ import lombok.Data;
 public class DatabaseAddDTO {
     private Long dataSourceId;
     private String databaseName;
-    private String collationName;
-    private String characterName;
+    private String collation;
+    private String characterSet;
 }

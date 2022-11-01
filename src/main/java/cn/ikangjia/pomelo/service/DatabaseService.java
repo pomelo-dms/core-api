@@ -3,6 +3,7 @@ package cn.ikangjia.pomelo.service;
 import cn.ikangjia.pomelo.api.dto.DatabaseAddDTO;
 import cn.ikangjia.pomelo.api.dto.DatabaseAlterDTO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
+import cn.ikangjia.pomelo.core.entity.CharacterSetEntity;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 
 import java.util.List;
@@ -24,4 +25,8 @@ public interface DatabaseService {
     Boolean alterDatabase(DatabaseAlterDTO alterDTO);
 
     List<TreeVO> listTree1(Long dataSourceId, String databaseName);
+
+    List<CharacterSetEntity> getCharacterSets(Long dataSourceId);
+
+    List<String> getCollations(Long dataSourceId, String characterSet);
 }
