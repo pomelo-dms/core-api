@@ -42,15 +42,16 @@ public class DatabaseServiceImpl implements DatabaseService {
     public Boolean addDatabase(DatabaseAddDTO addDTO) {
         DatabaseEntity database = new DatabaseEntity();
         database.setDatabaseName(addDTO.getDatabaseName());
-        database.setCharacterName(addDTO.getCharacterSet());
-        database.setCollationName(addDTO.getCollation());
+        database.setCharacterSet(addDTO.getCharacterSet());
+        database.setCollation(addDTO.getCollation());
         mySQLManager.createDatabase(addDTO.getDataSourceId(), database);
         return true;
     }
 
     @Override
     public Boolean dropDatabase(Long dataSourceId, String databaseName) {
-        return false;
+        mySQLManager.dropDatabase(dataSourceId, databaseName);
+        return true;
     }
 
     @Override

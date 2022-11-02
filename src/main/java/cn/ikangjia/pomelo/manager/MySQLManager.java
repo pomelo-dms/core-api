@@ -17,7 +17,7 @@ public interface MySQLManager {
 
     void alterDatabase(long dataSourceId, String databaseName, String collationName);
 
-    void getDatabaseInfo(long dataSourceId, String databaseName);
+    DatabaseEntity getDatabaseInfo(long dataSourceId, String databaseName);
 
     List<String> listDatabase(long dataSourceId, boolean systemDatabaseShow);
 

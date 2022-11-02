@@ -33,16 +33,16 @@ public class MySQLManagerImpl implements MySQLManager {
     @Override
     public void createDatabase(long dataSourceId, DatabaseEntity database) {
         String databaseName = database.getDatabaseName();
-        String characterName = database.getCharacterName();
+        String characterSet = database.getCharacterSet();
         String sql;
-        if (!StringUtils.hasText(characterName) || "默认".equalsIgnoreCase(characterName)) {
+        if (!StringUtils.hasText(characterSet) || "默认".equalsIgnoreCase(characterSet)) {
             sql = String.format(DatabaseSQLBuilder.database_create_1, databaseName);
         } else {
-            String collationName = database.getCollationName();
-            if (!StringUtils.hasText(collationName) || "默认".equalsIgnoreCase(collationName)) {
-                sql = String.format(DatabaseSQLBuilder.database_create_2, databaseName, characterName);
+            String collation = database.getCollation();
+            if (!StringUtils.hasText(collation) || "默认".equalsIgnoreCase(collation)) {
+                sql = String.format(DatabaseSQLBuilder.database_create_2, databaseName, characterSet);
             } else {
-                sql = String.format(DatabaseSQLBuilder.database_create_3, databaseName, characterName, collationName);
+                sql = String.format(DatabaseSQLBuilder.database_create_3, databaseName, characterSet, collation);
             }
         }
         log.info("创建数据库:{}", sql);
@@ -51,8 +51,9 @@ public class MySQLManagerImpl implements MySQLManager {
 
     @Override
     public void dropDatabase(long dataSourceId, String databaseName) {
-
-
+        String sql = String.format(DatabaseSQLBuilder.database_drop, databaseName);
+        log.info("删除数据库:{}", sql);
+        handler.execute(sql);
     }
 
     @Override
@@ -61,8 +62,8 @@ public class MySQLManagerImpl implements MySQLManager {
     }
 
     @Override
-    public void getDatabaseInfo(long dataSourceId, String databaseName) {
-
+    public DatabaseEntity getDatabaseInfo(long dataSourceId, String databaseName) {
+        return null;
     }
 
     @Override

@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class DatabaseEntity {
     private String databaseName;
-    private String collationName;
-    private String characterName;
+    private String collation;
+    private String characterSet;
 
     private String version;
 
@@ -21,6 +21,6 @@ public class DatabaseEntity {
 
     private String tableCount;
     private String viewCount;
-    private String storedProcedureCount;
+    private String procedureCount;
     private String functionCount;
 }
