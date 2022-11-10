@@ -5,23 +5,13 @@ import lombok.Data;
 /**
  * @author kangJia
  * @email ikangjia.cn@outlook.com
- * @since 2022/10/9 14:35
+ * @since 2022/11/10 15:48
  */
 @Data
-public class DatabaseEntity {
+public class Database {
     private String databaseName;
     private String collation;
     private String characterSet;
 
     private String sqlPath;
-
-    private String version;
-
-    private String databaseDDL;
-
-
-    private String tableCount;
-    private String viewCount;
-    private String procedureCount;
-    private String functionCount;
 }
