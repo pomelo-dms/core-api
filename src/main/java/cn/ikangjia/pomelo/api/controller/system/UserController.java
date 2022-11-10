@@ -1,4 +1,4 @@
-package cn.ikangjia.pomelo.api.controller;
+package cn.ikangjia.pomelo.api.controller.system;
 
 import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.vo.UserVO;

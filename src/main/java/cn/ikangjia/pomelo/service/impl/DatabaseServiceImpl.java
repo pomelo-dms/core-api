@@ -74,7 +74,8 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     @Override
     public Boolean alterDatabase(DatabaseAlterDTO alterDTO) {
-        return false;
+        mySQLManager.alterDatabase(alterDTO.getDataSourceId(), alterDTO.getDatabaseName(), alterDTO.getCollation());
+        return true;
     }
 
     @Override

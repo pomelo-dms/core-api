@@ -59,8 +59,10 @@ public class MySQLManagerImpl implements MySQLManager {
     }
 
     @Override
-    public void alterDatabase(long dataSourceId, String databaseName, String collationName) {
-
+    public void alterDatabase(long dataSourceId, String databaseName, String collation) {
+        String sql = String.format(DatabaseSQLBuilder.database_alter, databaseName, collation);
+        log.info("修改数据库:{}", sql);
+        handler.execute(sql);
     }
 
     @Override
@@ -73,34 +75,28 @@ public class MySQLManagerImpl implements MySQLManager {
         BeanUtils.copyProperties(database, databaseEntity);
 
         // 查询 MySQL 版本
-        List<Map<String, Object>> maps = handler.executeQuery(DatabaseSQLBuilder.database_version);
-        String version = maps.stream()
-                .map(map -> map.get("version"))
-                .map(String::valueOf).toList()
-                .get(0);
+        String version = handler.executeQueryString(DatabaseSQLBuilder.database_version, "version");
         databaseEntity.setVersion(version);
 
         // 查询 MySQL DDL
-        List<Map<String, Object>> maps1 = handler.executeQuery(String.format(DatabaseSQLBuilder.database_ddl, databaseName));
-        String ddl = maps1.stream()
-                .map(map -> map.get("Create Database"))
-                .map(String::valueOf).toList()
-                .get(0);
+        String ddl = handler.executeQueryString(
+                String.format(DatabaseSQLBuilder.database_ddl, databaseName),
+                "databaseDDL"
+        );
         databaseEntity.setDatabaseDDL(ddl);
 
         // 表数量
-        List<Map<String, Object>> maps2 = handler.executeQuery(String.format(DatabaseSQLBuilder.database_table_count, databaseName));
-        String tableCount = maps2.stream()
-                .map(map -> map.get("tableCount"))
-                .map(String::valueOf).toList()
-                .get(0);
+        String tableCount = handler.executeQueryString(
+                String.format(DatabaseSQLBuilder.database_table_count, databaseName),
+                "tableCount"
+        );
+
         databaseEntity.setTableCount(tableCount);
         // 视图数量
-        List<Map<String, Object>> maps3 = handler.executeQuery(String.format(DatabaseSQLBuilder.database_view_count, databaseName));
-        String viewCount = maps3.stream()
-                .map(map -> map.get("viewCount"))
-                .map(String::valueOf).toList()
-                .get(0);
+        String viewCount = handler.executeQueryString(
+                String.format(DatabaseSQLBuilder.database_view_count, databaseName),
+                "viewCount"
+        );
         databaseEntity.setViewCount(viewCount);
         // 存储过程数量
 
@@ -109,29 +105,17 @@ public class MySQLManagerImpl implements MySQLManager {
 
     @Override
     public List<String> listDatabase(long dataSourceId, boolean systemTableShow) {
-        List<Map<String, Object>> query = handler.executeQuery("show databases;");
-        return query.stream()
-                .map(map -> map.get("Database"))
-                .map(String::valueOf)
-                .collect(Collectors.toList());
+        return handler.executeQueryStrings("show databases;", "Database");
     }
 
     @Override
     public List<String> listTable(long dataSourceId, String databaseName) {
-        List<Map<String, Object>> query = handler.executeQuery(String.format(TableSQLBuilder.table_select, databaseName));
-        return query.stream()
-                .map(map -> map.get("TABLE_NAME"))
-                .map(String::valueOf)
-                .collect(Collectors.toList());
+        return handler.executeQueryStrings(String.format(TableSQLBuilder.table_select, databaseName), "TABLE_NAME");
     }
 
     @Override
     public List<String> listView(long dataSourceId, String databaseName) {
-        List<Map<String, Object>> query = handler.executeQuery(String.format(ViewSQLBuilder.view_select, databaseName));
-        return query.stream()
-                .map(map -> map.get("TABLE_NAME"))
-                .map(String::valueOf)
-                .collect(Collectors.toList());
+        return handler.executeQueryStrings(String.format(ViewSQLBuilder.view_select, databaseName), "TABLE_NAME");
     }
 
     @Override
@@ -142,10 +126,6 @@ public class MySQLManagerImpl implements MySQLManager {
     @Override
     public List<String> listCollations(Long dataSourceId, String characterSet) {
         String sql = String.format(CommonSQLBuilder.select_collation, characterSet);
-        List<Map<String, Object>> mapList = handler.executeQuery(sql);
-        return mapList.stream()
-                .map(map -> map.get("collation"))
-                .map(String::valueOf)
-                .collect(Collectors.toList());
+        return handler.executeQueryStrings(sql, "collation");
     }
 }

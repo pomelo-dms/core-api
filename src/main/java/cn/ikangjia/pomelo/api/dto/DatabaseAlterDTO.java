@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class DatabaseAlterDTO {
-    private String dataSourceId;
+    private Long dataSourceId;
     private String databaseName;
-    private String collationName;
+    private String collation;
 }

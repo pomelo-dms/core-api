@@ -15,7 +15,7 @@ public interface MySQLManager {
 
     void dropDatabase(long dataSourceId, String databaseName);
 
-    void alterDatabase(long dataSourceId, String databaseName, String collationName);
+    void alterDatabase(long dataSourceId, String databaseName, String collation);
 
     DatabaseEntity getDatabaseInfo(long dataSourceId, String databaseName);
 
