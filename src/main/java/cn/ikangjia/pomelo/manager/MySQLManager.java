@@ -1,6 +1,8 @@
 package cn.ikangjia.pomelo.manager;
 
+import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.core.entity.CharacterSetEntity;
+import cn.ikangjia.pomelo.core.entity.DataEntity;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 
 import java.util.List;
@@ -28,4 +30,9 @@ public interface MySQLManager {
     List<CharacterSetEntity> listCharacterSets(Long dataSourceId);
 
     List<String> listCollations(Long dataSourceId, String characterSet);
+
+    DataEntity showTableData(Long dataSourceId, DataQuery dataQuery);
+
+    Long countTableDataRows(Long dataSourceId, String databaseName, String tableName);
+
 }

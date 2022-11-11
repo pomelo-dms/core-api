@@ -10,4 +10,12 @@ public interface TableSQLBuilder {
             select table_name from information_schema.tables
             where table_schema = '%s' and table_type = 'BASE TABLE';
             """;
+
+    String table_select_data = """
+            select * from %s.%s where 1 = 1 limit %s, %s;
+            """;
+
+    String table_Row_count = """
+            select count(*) as total from %s.%s where 1 = 1;
+            """;
 }

@@ -1,7 +1,9 @@
 package cn.ikangjia.pomelo.manager.impl;
 
+import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.core.ExecuteHandler;
 import cn.ikangjia.pomelo.core.entity.CharacterSetEntity;
+import cn.ikangjia.pomelo.core.entity.DataEntity;
 import cn.ikangjia.pomelo.core.entity.Database;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.core.sqlbuilder.CommonSQLBuilder;
@@ -127,5 +129,21 @@ public class MySQLManagerImpl implements MySQLManager {
     public List<String> listCollations(Long dataSourceId, String characterSet) {
         String sql = String.format(CommonSQLBuilder.select_collation, characterSet);
         return handler.executeQueryStrings(sql, "collation");
+    }
+
+    @Override
+    public DataEntity showTableData(Long dataSourceId, DataQuery dataQuery) {
+        String sql = String.format(TableSQLBuilder.table_select_data,
+                dataQuery.getDatabaseName(),
+                dataQuery.getTableName(),
+                (dataQuery.getPageNum() - 1) * dataQuery.getPageSize(),
+                dataQuery.getPageSize());
+        return handler.executeQueryForData(sql);
+    }
+
+    @Override
+    public Long countTableDataRows(Long dataSourceId, String databaseName, String tableName) {
+        String sql = String.format(TableSQLBuilder.table_Row_count, databaseName, tableName);
+        return Long.valueOf(handler.executeQueryString(sql, "total"));
     }
 }

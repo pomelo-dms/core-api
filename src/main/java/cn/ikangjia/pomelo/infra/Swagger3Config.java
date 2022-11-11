@@ -26,12 +26,10 @@ public class Swagger3Config {
                 .groupName("Pomelo-dms")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("cn.ikangjia.pomelo.api.controller"))
-//                .paths(PathSelectors.ant("/controller/**"))
                 .build();
     }
 
 
-//    @SuppressWarnings("all")
     public ApiInfo apiInfo(){
         return new ApiInfoBuilder()
                 .title("我是 Title")
@@ -40,7 +38,7 @@ public class Swagger3Config {
                 .version("v0.1")
                 .description("我是描述")
                 .termsOfServiceUrl("ikangjia.cn@outlook.com")
-                .contact(new Contact("xx", "http://xxx/xxx", "xxx@outlook.com"))
+                .contact(new Contact("xx", "https://xxx/xxx", "xxx@outlook.com"))
                 .build();
     }
 }
