@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://121.36.42.97:3306/db_pomelo
+logging:
+  level:
+    cn.ikangjia.pomelo.domain.mapper: debug
+
+swagger3:
+  enable: true
+  group-name: Pomelo-dms
+  title: 我是 Title
+  license: MIT
+  license-url: xxx
+  version: v0.1
+  description: 描述信息
+  contact:
+    name: xxx
+    url: xxx
+    email: xxx@outlook.com

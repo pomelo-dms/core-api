@@ -1,5 +1,6 @@
 package cn.ikangjia.pomelo.infra;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -32,6 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/swagger**/**",
                         "/v3/api**",
                         "/doc.html");
+
     }
 
     @Bean
