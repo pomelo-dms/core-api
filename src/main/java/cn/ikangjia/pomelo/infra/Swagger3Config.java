@@ -4,14 +4,15 @@ import io.swagger.models.auth.In;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author kangJia
@@ -19,7 +20,6 @@ import java.util.*;
  * @since 2022/10/11 15:20
  */
 @Configuration
-@EnableOpenApi
 public class Swagger3Config {
     private final Swagger3Properties properties;
 
@@ -35,6 +35,7 @@ public class Swagger3Config {
                 .groupName(properties.getGroupName())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("cn.ikangjia.pomelo.api.controller"))
+                .paths(PathSelectors.any())
                 .build()
                 // 授权信息设置，必要的header token等认证信息
                 .securitySchemes(securitySchemes())
@@ -46,7 +47,7 @@ public class Swagger3Config {
      * 设置授权信息
      */
     private List<SecurityScheme> securitySchemes() {
-        ApiKey apiKey = new ApiKey("Token", "Token", In.HEADER.toValue());
+        ApiKey apiKey = new ApiKey("Token", "token", In.HEADER.toValue());
         return Collections.singletonList(apiKey);
     }
 
