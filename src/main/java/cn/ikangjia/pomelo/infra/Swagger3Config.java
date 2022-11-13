@@ -1,6 +1,7 @@
 package cn.ikangjia.pomelo.infra;
 
 import io.swagger.models.auth.In;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -20,6 +21,7 @@ import java.util.List;
  * @since 2022/10/11 15:20
  */
 @Configuration
+@EnableConfigurationProperties(Swagger3Properties.class)
 public class Swagger3Config {
     private final Swagger3Properties properties;
 
