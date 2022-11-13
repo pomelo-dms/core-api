@@ -3,7 +3,9 @@ package cn.ikangjia.pomelo.api.controller;
 import cn.ikangjia.pomelo.api.dto.TableCreateDTO;
 import cn.ikangjia.pomelo.api.dto.TableDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
+import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
+import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
 import cn.ikangjia.pomelo.service.TableService;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,5 +77,18 @@ public class TableController {
     @PutMapping("/rename")
     public ResultVO<Void> renameTable(TableDTO tableDTO) {
         return ResultVO.success(null);
+    }
+
+    @GetMapping("/data")
+    public ResultVO<DataShowVO> showData(Long dataSourceId, String databaseName, String tableName, Integer pageSize, Integer pageNum) {
+        DataQuery dataQuery = new DataQuery();
+        dataQuery.setDataSourceId(dataSourceId);
+        dataQuery.setTableName(tableName);
+        dataQuery.setDatabaseName(databaseName);
+        dataQuery.setPageNum(pageNum);
+        dataQuery.setPageSize(pageSize);
+        return Optional.ofNullable(tableService.showData(dataQuery.getDataSourceId(), dataQuery))
+                .map(ResultVO::success)
+                .orElseThrow();
     }
 }

@@ -1,15 +1,17 @@
-package cn.ikangjia.pomelo.api.dto;
+package cn.ikangjia.pomelo.core.entity;
 
 import lombok.Data;
 
 /**
  * @author kangJia
  * @email ikangjia.cn@outlook.com
- * @since 2022/10/14 13:56
+ * @since 2022/11/10 15:48
  */
 @Data
-public class DatabaseAlterDTO {
-    private Long dataSourceId;
+public class Database {
     private String databaseName;
     private String collation;
+    private String characterSet;
+
+    private String sqlPath;
 }

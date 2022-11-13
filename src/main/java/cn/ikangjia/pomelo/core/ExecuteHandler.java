@@ -4,13 +4,12 @@ import cn.ikangjia.pomelo.core.entity.DataEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * SQL 执行器
@@ -21,6 +20,7 @@ import java.util.Map;
  */
 @Slf4j
 @Component
+@SuppressWarnings("all")
 public class ExecuteHandler {
     private final JdbcThreadLocal jdbcThreadLocal;
 
@@ -56,10 +56,19 @@ public class ExecuteHandler {
         }
     }
 
+    /**
+     * 查询表数据，并将其封装成对象列表
+     *
+     * @param t      泛型对象
+     * @param sql    sql 语句
+     * @param params 参数
+     * @param <T>    泛型对象
+     * @return 对象列表
+     */
     public <T> List<T> executeQuery(Class<T> t, String sql, String... params) {
         try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
             ResultSet rs = statement.executeQuery();
-            return doObjectResult(t, rs);
+            return ResultHandler.doObjectResult(t, rs);
         } catch (SQLException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e.getMessage(), e);
         } catch (InvocationTargetException | NoSuchMethodException e) {
@@ -86,7 +95,7 @@ public class ExecuteHandler {
             for (int i = 1; i <= columnCount; i++) {
                 columnNameList.add(metaData.getColumnLabel(i));
             }
-            dataListMap = doMapResult(rs);
+            dataListMap = ResultHandler.doMapResult(rs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -95,56 +104,71 @@ public class ExecuteHandler {
         return result;
     }
 
-//    public List<Object> executeQuery(Class t, String sql, String... params) {
-//        try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
-//            ResultSet rs = statement.executeQuery();
-//            return doObjectResult(t, rs);
-//        } catch (SQLException | InstantiationException | IllegalAccessException e) {
-//            throw new RuntimeException(e.getMessage(), e);
-//        }
-//    }
-
+    /**
+     * 较为通用的一个查询方法
+     *
+     * @param sql    sql 语句
+     * @param params 参数
+     * @return 查询结果
+     */
     public List<Map<String, Object>> executeQuery(String sql, String... params) {
         try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
             ResultSet rs = statement.executeQuery();
-            return doMapResult(rs);
+            return ResultHandler.doMapResult(rs);
         } catch (SQLException e) {
             throw new DMSException(e.getMessage(), e);
         }
     }
 
+    /**
+     * 返回查询结果集中的指定列所有数据
+     *
+     * @param sql                   sql 语句
+     * @param needReturnColumnLabel 需要返回列数据的列名称
+     * @param params                参数
+     * @return 列数据
+     */
+    public List<String> executeQueryStrings(String sql, String needReturnColumnLabel, String... params) {
+        try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
+            ResultSet rs = statement.executeQuery();
 
-    private List<Map<String, Object>> doMapResult(ResultSet rs) throws SQLException {
-        ResultSetMetaData metaData = rs.getMetaData();
-        int columnCount = metaData.getColumnCount();
-
-        List<Map<String, Object>> result = new ArrayList<>(columnCount);
-        while (rs.next()) {
-            Map<String, Object> temMap = new HashMap<>();
-            for (int i = 0; i < columnCount; i++) {
-                temMap.put(metaData.getColumnLabel(i + 1), rs.getObject(i + 1));
+            List<Map<String, Object>> mapList = ResultHandler.doMapResult(rs);
+            if (mapList.size() == 0) {
+                return new ArrayList<>();
             }
-            result.add(temMap);
+            return mapList.stream()
+                    .map(map -> map.get(needReturnColumnLabel))
+                    .map(String::valueOf)
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
+            throw new DMSException(e.getMessage(), e);
         }
-        return result;
     }
 
-    private <T> List<T> doObjectResult(Class<T> t, ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        ResultSetMetaData metaData = rs.getMetaData();
-        int columnCount = metaData.getColumnCount();
+    /**
+     * 返回查询结果集中的指定列的数据
+     *
+     * @param sql                   sql 语句
+     * @param needReturnColumnLabel 需要返回列数据的列名称
+     * @param params                参数
+     * @return 列数据
+     */
+    public String executeQueryString(String sql, String needReturnColumnLabel, String... params) {
+        try (PreparedStatement statement = this.getPrepareStatement(sql, params)) {
+            ResultSet rs = statement.executeQuery();
 
-        Field[] fields = t.getDeclaredFields();
-
-        List<T> result = new ArrayList<>(columnCount);
-        while (rs.next()) {
-            T obj = t.getDeclaredConstructor().newInstance();
-            for (Field field : fields) {
-                field.setAccessible(true);
-                field.set(obj, String.valueOf(rs.getObject(field.getName())));
+            List<Map<String, Object>> mapList = ResultHandler.doMapResult(rs);
+            if (mapList.size() == 0) {
+                return "";
             }
-            result.add(obj);
+            return mapList.stream()
+                    .map(map -> map.get(needReturnColumnLabel))
+                    .map(String::valueOf)
+                    .collect(Collectors.toList())
+                    .get(0);
+        } catch (SQLException e) {
+            throw new DMSException(e.getMessage(), e);
         }
-        return result;
     }
 
     private Statement getStatement() {
