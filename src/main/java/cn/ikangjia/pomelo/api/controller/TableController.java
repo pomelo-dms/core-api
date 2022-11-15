@@ -64,6 +64,14 @@ public class TableController {
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "获取列字段数据类型列表")
+    @PostMapping
+    public ResultVO<String> listColumnType(@RequestBody TableCreateDTO tableCreateDTO) {
+        return Optional.ofNullable(tableService.createTable(tableCreateDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
+
     @ApiOperation(value = "截断表")
     @DeleteMapping("/truncate")
     public ResultVO<Void> truncateTable(Long dataSourceId, String databaseName) {

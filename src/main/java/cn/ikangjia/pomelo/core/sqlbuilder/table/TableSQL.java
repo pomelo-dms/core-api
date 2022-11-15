@@ -1,4 +1,4 @@
-package cn.ikangjia.pomelo.core.sqlbuilder;
+package cn.ikangjia.pomelo.core.sqlbuilder.table;
 
 /**
  * @author kangJia

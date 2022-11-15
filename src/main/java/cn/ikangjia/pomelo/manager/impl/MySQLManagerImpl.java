@@ -8,7 +8,7 @@ import cn.ikangjia.pomelo.core.entity.Database;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.core.sqlbuilder.CommonSQL;
 import cn.ikangjia.pomelo.core.sqlbuilder.DatabaseSQL;
-import cn.ikangjia.pomelo.core.sqlbuilder.TableSQL;
+import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.core.sqlbuilder.ViewSQL;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import lombok.extern.slf4j.Slf4j;

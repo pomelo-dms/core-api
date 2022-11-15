@@ -1,12 +1,12 @@
-package cn.ikangjia.pomelo.core.sqlbuilder;
+package cn.ikangjia.pomelo.core.sqlbuilder.table;
 
 import cn.ikangjia.pomelo.api.dto.table.ColumnCreateDTO;
+import cn.ikangjia.pomelo.core.entity.TableEntity;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import java.time.chrono.IsoChronology;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author kangJia
@@ -16,15 +16,43 @@ import java.util.stream.Collectors;
 public class TableSQLBuilder {
 
 
-    public static String getCreateSQL(String databaseName, String tableName, String comment, List<ColumnCreateDTO> columnDTOList) {
+    public static String getCreateSQL(TableEntity tableEntity, List<ColumnCreateDTO> columnDTOList) {
+        String databaseName = tableEntity.getDbName();
+        String tableName = tableEntity.getTableName();
+        String comment = tableEntity.getComment();
+        String engine = tableEntity.getEngine();
+
         StringBuilder sb = new StringBuilder();
 
         // create table db_xx.t_person (
         sb.append("create table ").append(databaseName).append(".").append(tableName).append(" ( ");
 
+        // 列字段信息
+        String columnStr = getColumnStr(columnDTOList);
+
+        sb.append(columnStr)
+                .append(" ) ");
+
+        // 注释
+        if (StringUtils.hasText(comment)) {
+            sb.append(" comment='").append(comment).append("'");
+        }
+
+        // 引擎
+        if (StringUtils.hasText(engine)) {
+            sb.append(" engine='").append(comment).append("'");
+        }
+
+        sb.append(";");
+        return sb.toString();
+    }
+
+    @NotNull
+    private static String getColumnStr(List<ColumnCreateDTO> columnDTOList) {
         if (ObjectUtils.isEmpty(columnDTOList) || columnDTOList.size() < 1) {
             throw new RuntimeException("列参数有误");
         }
+
         StringBuilder columnSB = new StringBuilder();
         columnDTOList.forEach(columnInfo -> {
             System.out.println(columnInfo);
@@ -64,11 +92,6 @@ public class TableSQLBuilder {
             String primaryStr = "PRIMARY KEY ( " + collect + ")";
             columnStr = columnStr + primaryStr;
         }
-        sb.append(columnStr).append(" ) ");
-        if (StringUtils.hasText(comment)) {
-            sb.append(" comment='").append(comment).append("'");
-        }
-        sb.append(";");
-        return sb.toString();
+        return columnStr;
     }
 }
