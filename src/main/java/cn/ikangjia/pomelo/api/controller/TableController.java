@@ -44,41 +44,49 @@ public class TableController {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "删除表")
     @DeleteMapping
     public ResultVO<Void> dropTable(TableDTO tableDTO) {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "修改表：更难更难")
     @PutMapping
     public ResultVO<Void> alterTable(TableDTO tableDTO) {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "创建表：真难真难")
     @PostMapping
     public ResultVO<Void> createTable(TableCreateDTO tableCreateDTO) {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "截断表")
     @DeleteMapping("/truncate")
     public ResultVO<Void> truncateTable(Long dataSourceId, String databaseName) {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "清空表")
     @DeleteMapping("/clear")
     public ResultVO<Void> clearTable(TableDTO tableDTO) {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "获取建表 DDL 语句")
     @GetMapping("/ddl")
     public ResultVO<Void> getTableDDLSQL(TableDTO tableDTO) {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "创建相似表（复制表）")
     @PostMapping("/similarTable")
     public ResultVO<Void> createSimilarTable(TableDTO tableDTO) {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "重命名表")
     @PutMapping("/rename")
     public ResultVO<Void> renameTable(TableDTO tableDTO) {
         return ResultVO.success(null);
