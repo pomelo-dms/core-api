@@ -10,6 +10,11 @@ import lombok.Data;
 @Data
 public class TableEntity {
 
-    private String tableName;
     private String dbName;
+    private String tableName;
+
+    private String characterSet;
+    private String engine;
+
+    private String comment;
 }

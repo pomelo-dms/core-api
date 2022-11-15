@@ -5,7 +5,7 @@ package cn.ikangjia.pomelo.core.sqlbuilder;
  * @email ikangjia.cn@outlook.com
  * @since 2022/11/1 13:56
  */
-public interface CommonSQLBuilder {
+public interface CommonSQL {
     String select_character_Set = """
             select character_Set_name as characterSet, default_collate_name as defaultCollation, 
             description as description, maxlen as maxLen from information_schema.character_sets;

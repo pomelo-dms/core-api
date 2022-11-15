@@ -1,7 +1,7 @@
 package cn.ikangjia.pomelo.api.controller;
 
-import cn.ikangjia.pomelo.api.dto.TableCreateDTO;
 import cn.ikangjia.pomelo.api.dto.TableDTO;
+import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
@@ -58,8 +58,10 @@ public class TableController {
 
     @ApiOperation(value = "创建表：真难真难")
     @PostMapping
-    public ResultVO<Void> createTable(TableCreateDTO tableCreateDTO) {
-        return ResultVO.success(null);
+    public ResultVO<String> createTable(@RequestBody TableCreateDTO tableCreateDTO) {
+        return Optional.ofNullable(tableService.createTable(tableCreateDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
     }
 
     @ApiOperation(value = "截断表")
