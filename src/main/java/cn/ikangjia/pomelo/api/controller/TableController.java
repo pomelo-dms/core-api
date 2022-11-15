@@ -7,6 +7,8 @@ import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
 import cn.ikangjia.pomelo.service.TableService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.Optional;
  * @email ikangjia.cn@outlook.com
  * @since 2022/10/14 13:51
  */
+@Api(tags = "表操作")
 @RestController
 @RequestMapping("/api/v1/table")
 public class TableController {
@@ -27,6 +30,7 @@ public class TableController {
         this.tableService = tableService;
     }
 
+    @ApiOperation(value = "树形结构三级信息查询：表列表")
     @GetMapping("/tree")
     public ResultVO<List<TreeVO>> listTables(Long dataSourceId, String databaseName) {
         return Optional.ofNullable(tableService.listTree2Table(dataSourceId, databaseName))
@@ -34,6 +38,7 @@ public class TableController {
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "表对象信息查询")
     @GetMapping("/tableInfo")
     public ResultVO<Void> getTableInfo(TableDTO tableDTO) {
         return ResultVO.success(null);
@@ -79,6 +84,7 @@ public class TableController {
         return ResultVO.success(null);
     }
 
+    @ApiOperation(value = "表数据查询")
     @GetMapping("/data")
     public ResultVO<DataShowVO> showData(Long dataSourceId, String databaseName, String tableName, Integer pageSize, Integer pageNum) {
         DataQuery dataQuery = new DataQuery();

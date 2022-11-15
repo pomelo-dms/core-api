@@ -1,10 +1,14 @@
 package cn.ikangjia.pomelo.api.controller.system;
 
+import cn.ikangjia.pomelo.api.dto.system.UserLoginDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.vo.UserVO;
 import cn.ikangjia.pomelo.common.util.VerificationCode;
 import cn.ikangjia.pomelo.domain.entity.UserDO;
 import cn.ikangjia.pomelo.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +24,7 @@ import java.util.Optional;
  * @email ikangjia.cn@outlook.com
  * @since 2022/10/8 9:23
  */
+@Api(tags = "用户操作")
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -29,6 +34,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ApiOperation(value = "根据 id 查询用户详情")
     @GetMapping("/{id}")
     public ResultVO<UserDO> getUser(@PathVariable Long id) {
         return Optional.ofNullable(userService.getUser(id))
@@ -36,8 +42,9 @@ public class UserController {
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "登录接口")
     @PostMapping("/doLogin")
-    public ResultVO<UserVO> getUser(HttpServletRequest  request, @RequestBody UserDO userDO) {
+    public ResultVO<UserVO> getUser(HttpServletRequest  request, @RequestBody UserLoginDTO userLoginDTO) {
 //        String inputCode = userDO.getCode();
 //        HttpSession session = request.getSession();
 //        String originalCode = (String)session.getAttribute("code");
@@ -50,11 +57,12 @@ public class UserController {
 //        if (!originalCode.equalsIgnoreCase(inputCode)) {
 //            throw new RuntimeException("验证码错误");
 //        }
-        return Optional.ofNullable(userService.doLogin(userDO))
+        return Optional.ofNullable(userService.doLogin(userLoginDTO))
                 .map(ResultVO::success)
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "获取验证码接口")
     @GetMapping("/code")
     public void verifyCode(HttpServletRequest request, HttpServletResponse resp) throws IOException {
         VerificationCode code = new VerificationCode();

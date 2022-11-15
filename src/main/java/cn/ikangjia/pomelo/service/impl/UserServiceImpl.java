@@ -1,5 +1,6 @@
 package cn.ikangjia.pomelo.service.impl;
 
+import cn.ikangjia.pomelo.api.dto.system.UserLoginDTO;
 import cn.ikangjia.pomelo.api.vo.UserVO;
 import cn.ikangjia.pomelo.domain.entity.UserDO;
 import cn.ikangjia.pomelo.domain.mapper.UserMapper;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO doLogin(UserDO userDO) {
+    public UserVO doLogin(UserLoginDTO userDO) {
         LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserDO::getAccount, userDO.getAccount())
                 .eq(UserDO::getPassword, userDO.getPassword());
