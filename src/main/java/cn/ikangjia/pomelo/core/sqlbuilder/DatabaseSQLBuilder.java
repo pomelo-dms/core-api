@@ -10,7 +10,7 @@ public interface DatabaseSQLBuilder {
 
     String database_show = "show databases;";
     String database_version = "select version() as version;";
-    String database_ddl = "show create database %s as databaseDDL;";
+    String database_ddl = "show create database %s;";
 
     String database_drop = "drop database %s;";
 

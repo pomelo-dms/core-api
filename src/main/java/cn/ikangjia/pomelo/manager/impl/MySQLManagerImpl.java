@@ -83,7 +83,7 @@ public class MySQLManagerImpl implements MySQLManager {
         // 查询 MySQL DDL
         String ddl = handler.executeQueryString(
                 String.format(DatabaseSQLBuilder.database_ddl, databaseName),
-                "databaseDDL"
+                "Create Database"
         );
         databaseEntity.setDatabaseDDL(ddl);
 
