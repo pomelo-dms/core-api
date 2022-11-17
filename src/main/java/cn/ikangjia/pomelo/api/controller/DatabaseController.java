@@ -8,6 +8,8 @@ import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.core.entity.CharacterSetEntity;
 import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.service.DatabaseService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Optional;
  * @email ikangjia.cn@outlook.com
  * @since 2022/10/13 15:17
  */
+@Api(tags = "数据库操作")
 @RestController
 @RequestMapping("/api/v1/database")
 public class DatabaseController {
@@ -27,16 +30,19 @@ public class DatabaseController {
         this.databaseService = databaseService;
     }
 
+    @ApiOperation(value = "树形结构一级信息查询")
     @GetMapping("/tree0")
     public ResultVO<List<TreeVO>> listDatabases(Long dataSourceId) {
         return ResultVO.success(databaseService.listDatabases(dataSourceId));
     }
 
+    @ApiOperation(value = "树形结构二级信息查询")
     @GetMapping("/tree1")
     public ResultVO<List<TreeVO>> listTree1(String databaseName, Long dataSourceId) {
         return ResultVO.success(databaseService.listTree1(dataSourceId, databaseName));
     }
 
+    @ApiOperation(value = "获取数据库的对象信息")
     @GetMapping("/{databaseName}")
     public ResultVO<DatabaseInfoVO> getDatabaseInfo(Long dataSourceId, @PathVariable String databaseName) {
         return Optional.ofNullable(databaseService.getDatabaseInfo(dataSourceId, databaseName))
@@ -44,6 +50,7 @@ public class DatabaseController {
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "获取数据库字符集列表")
     @GetMapping("/characterSet")
     public ResultVO<List<CharacterSetEntity>> getCharacterSets(Long dataSourceId) {
         return Optional.ofNullable(databaseService.getCharacterSets(dataSourceId))
@@ -51,6 +58,7 @@ public class DatabaseController {
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "获取指定字符集的校验规则")
     @GetMapping("/collation")
     public ResultVO<List<String>> getCharacterSets(Long dataSourceId, String characterSet) {
         return Optional.ofNullable(databaseService.getCollations(dataSourceId, characterSet))
@@ -58,6 +66,7 @@ public class DatabaseController {
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "添加数据库")
     @PostMapping
     public ResultVO<Boolean> addDatabase(@RequestBody DatabaseAddDTO addDTO) {
         return Optional.ofNullable(databaseService.addDatabase(addDTO))
@@ -65,6 +74,7 @@ public class DatabaseController {
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "删除数据库")
     @DeleteMapping("/{databaseName}")
     public ResultVO<Boolean> dropDatabase(Long dataSourceId, @PathVariable String databaseName) {
         return Optional.ofNullable(databaseService.dropDatabase(dataSourceId, databaseName))
@@ -72,6 +82,7 @@ public class DatabaseController {
                 .orElseThrow();
     }
 
+    @ApiOperation(value = "更新数据库")
     @PutMapping
     public ResultVO<Boolean> alterDatabase(@RequestBody DatabaseAlterDTO alterDTO) {
         return Optional.ofNullable(databaseService.alterDatabase(alterDTO))

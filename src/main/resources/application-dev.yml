@@ -10,10 +10,10 @@ logging:
 
 swagger3:
   enable: true
-  group-name: Pomelo-dms
-  title: 我是 Title
+  group-name: Pomelo-dms-mysql
+  title: Pomelo
   license: MIT
-  license-url: xxx
+  license-url: https://opensource.org/licenses/MIT
   version: v0.1
   description: 描述信息
   contact:

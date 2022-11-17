@@ -1,8 +1,10 @@
 package cn.ikangjia.pomelo.service;
 
+import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
+import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 
 import java.util.List;
 
@@ -22,4 +24,8 @@ public interface TableService {
     List<TreeVO> listTree2Table(Long dataSourceId, String databaseName);
 
     DataShowVO showData(Long dataSourceId, DataQuery dataQuery);
+
+    String createTable(TableCreateDTO tableCreateDTO);
+
+    List<String> listDataTypes();
 }

@@ -1,15 +1,15 @@
-package cn.ikangjia.pomelo.core.entity;
+package cn.ikangjia.pomelo.api.dto.table;
 
 import lombok.Data;
 
 /**
  * @author kangJia
  * @email ikangjia.cn@outlook.com
- * @since 2022/10/9 15:00
+ * @since 2022/11/15 20:48
  */
 @Data
-public class ColumnEntity {
-    private String tableName;
+public class ColumnCreateDTO {
+    // 列名称
     private String columnName;
 
     private String typeInfo;

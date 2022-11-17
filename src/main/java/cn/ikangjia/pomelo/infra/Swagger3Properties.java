@@ -12,7 +12,6 @@ import java.util.Map;
  * @since 2022/11/12 16:25
  */
 @Data
-@Component
 @ConfigurationProperties(prefix = "swagger3")
 public class Swagger3Properties {
     private Boolean enable;

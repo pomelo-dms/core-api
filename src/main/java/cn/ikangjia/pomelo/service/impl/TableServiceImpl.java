@@ -1,12 +1,14 @@
 package cn.ikangjia.pomelo.service.impl;
 
+import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
 import cn.ikangjia.pomelo.common.util.TreeUtil;
-import cn.ikangjia.pomelo.core.constants.TableConstants;
 import cn.ikangjia.pomelo.core.entity.DataEntity;
+import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.manager.MySQLManager;
+import cn.ikangjia.pomelo.manager.TableManager;
 import cn.ikangjia.pomelo.service.TableService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,11 @@ import java.util.List;
 public class TableServiceImpl implements TableService {
 
     private final MySQLManager mySQLManager;
+    private final TableManager tableManager;
 
-    public TableServiceImpl(MySQLManager mySQLManager) {
+    public TableServiceImpl(MySQLManager mySQLManager, TableManager tableManager) {
         this.mySQLManager = mySQLManager;
+        this.tableManager = tableManager;
     }
 
     @Override
@@ -49,5 +53,19 @@ public class TableServiceImpl implements TableService {
         result.setDataEntity(dataEntity);
         result.setTotal(total);
         return result;
+    }
+
+    @Override
+    public String createTable(TableCreateDTO tableCreateDTO) {
+        Long dataSourceId = tableCreateDTO.getDataSourceId();
+        tableManager.createTable(dataSourceId, tableCreateDTO);
+
+        return tableCreateDTO.getTableName();
+    }
+
+    @Override
+    public List<String> listDataTypes() {
+        List<TableSQL.DataTypeEnum> allDataTypes = TableSQL.DataTypeEnum.getAllDataTypes();
+        return allDataTypes.stream().map(TableSQL.DataTypeEnum::getDataType).toList();
     }
 }

@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author kangJia
  * @email ikangjia.cn@outlook.com
- * @since 2022/11/11 9:38
+ * @since 2022/11/15 20:43
  */
-
-@Api(tags = "数据操作")
+@Api(tags = "SQL 控制台操作")
 @RestController
-@RequestMapping("/data")
-public class DataController {
-
+@RequestMapping("/sqlConsole")
+public class SQLConsoleController {
 
 }

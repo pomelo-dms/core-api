@@ -39,5 +39,4 @@ public class UserDO {
     @TableField("is_deleted")
     private boolean deleted;
 
-    private String code;
 }

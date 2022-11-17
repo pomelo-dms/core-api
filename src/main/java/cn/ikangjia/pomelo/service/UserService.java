@@ -1,5 +1,6 @@
 package cn.ikangjia.pomelo.service;
 
+import cn.ikangjia.pomelo.api.dto.system.UserLoginDTO;
 import cn.ikangjia.pomelo.api.vo.UserVO;
 import cn.ikangjia.pomelo.domain.entity.UserDO;
 
@@ -12,5 +13,5 @@ public interface UserService {
 
     UserDO getUser(Long id);
 
-    UserVO doLogin(UserDO userDO);
+    UserVO doLogin(UserLoginDTO userLoginDTO);
 }

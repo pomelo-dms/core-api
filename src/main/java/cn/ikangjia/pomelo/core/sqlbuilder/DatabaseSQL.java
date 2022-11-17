@@ -5,12 +5,12 @@ package cn.ikangjia.pomelo.core.sqlbuilder;
  * @email ikangjia.cn@outlook.com
  * @since 2022/10/13 13:58
  */
-public interface DatabaseSQLBuilder {
+public interface DatabaseSQL {
     String database_use = "use %s;";
 
     String database_show = "show databases;";
     String database_version = "select version() as version;";
-    String database_ddl = "show create database %s as databaseDDL;";
+    String database_ddl = "show create database %s;";
 
     String database_drop = "drop database %s;";
 
