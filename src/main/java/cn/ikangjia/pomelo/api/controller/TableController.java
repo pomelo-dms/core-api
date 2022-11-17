@@ -6,6 +6,7 @@ import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
+import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.service.TableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,6 +61,14 @@ public class TableController {
     @PostMapping
     public ResultVO<String> createTable(@RequestBody TableCreateDTO tableCreateDTO) {
         return Optional.ofNullable(tableService.createTable(tableCreateDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
+
+    @ApiOperation(value = "获取列字段类型信息")
+    @GetMapping("/dataType")
+    public ResultVO<List<TableSQL.DataTypeEnum>> listDataTypes() {
+        return Optional.ofNullable(tableService.listDataTypes())
                 .map(ResultVO::success)
                 .orElseThrow();
     }

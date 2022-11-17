@@ -6,6 +6,7 @@ import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
 import cn.ikangjia.pomelo.common.util.TreeUtil;
 import cn.ikangjia.pomelo.core.entity.DataEntity;
+import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import cn.ikangjia.pomelo.manager.TableManager;
 import cn.ikangjia.pomelo.service.TableService;
@@ -60,5 +61,10 @@ public class TableServiceImpl implements TableService {
         tableManager.createTable(dataSourceId, tableCreateDTO);
 
         return tableCreateDTO.getTableName();
+    }
+
+    @Override
+    public List<TableSQL.DataTypeEnum> listDataTypes() {
+        return TableSQL.DataTypeEnum.getAllDataTypes();
     }
 }
