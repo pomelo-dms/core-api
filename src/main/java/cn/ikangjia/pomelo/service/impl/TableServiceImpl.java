@@ -64,7 +64,8 @@ public class TableServiceImpl implements TableService {
     }
 
     @Override
-    public List<TableSQL.DataTypeEnum> listDataTypes() {
-        return TableSQL.DataTypeEnum.getAllDataTypes();
+    public List<String> listDataTypes() {
+        List<TableSQL.DataTypeEnum> allDataTypes = TableSQL.DataTypeEnum.getAllDataTypes();
+        return allDataTypes.stream().map(TableSQL.DataTypeEnum::getDataType).toList();
     }
 }

@@ -27,5 +27,5 @@ public interface TableService {
 
     String createTable(TableCreateDTO tableCreateDTO);
 
-    List<TableSQL.DataTypeEnum> listDataTypes();
+    List<String> listDataTypes();
 }

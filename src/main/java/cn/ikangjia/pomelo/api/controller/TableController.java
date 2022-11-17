@@ -67,7 +67,7 @@ public class TableController {
 
     @ApiOperation(value = "获取列字段类型信息")
     @GetMapping("/dataType")
-    public ResultVO<List<TableSQL.DataTypeEnum>> listDataTypes() {
+    public ResultVO<List<String>> listDataTypes() {
         return Optional.ofNullable(tableService.listDataTypes())
                 .map(ResultVO::success)
                 .orElseThrow();
