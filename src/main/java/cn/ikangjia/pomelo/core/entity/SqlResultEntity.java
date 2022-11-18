@@ -1,0 +1,53 @@
+package cn.ikangjia.pomelo.core.entity;
+
+import lombok.Data;
+
+/**
+ * @author kangjia
+ * @email ikangjia.cn@outlook.com
+ * @since 2022/11/18 16:53
+ */
+@Data
+public class SqlResultEntity {
+    public final static String OK = "> OK";
+    public final static String affected_rows = "> Affected Rows: %s";
+    public final static String time_consume = "> Time use: %ss";
+    public final static String error_msg = "> %s - %s";
+
+    // execute(sql) 返回 true，即为有结果集
+    public final static int have_resultSet = 1;
+
+    // execute(sql) 返回 false，没有结果集。create、update、insert 等 DDL、DML 语句
+    public final static int no_have_resultSet = 2;
+
+    // 执行 SQL 语句出错时，值设置为 3
+    public final static int execute_error = 3;
+
+    // 每个 SQL 指定一个唯一 id
+    private String sqlId;
+
+    // 待执行的 SQL
+    private String sql;
+
+    // SQL 语句类型，有结果集的为 1，没结果集的为 2
+    private String sqlType;
+
+    // 受影响行数
+    private String effectRow;
+
+    // 耗时：0.23
+    private String timeConsume;
+
+    // 耗时信息：时间：0.23s
+    private String timeConsumeInfo;
+
+    // 有结果集的，解析结果集数据于此
+    private DataEntity dataEntity;
+
+
+    // 执行结果信息，成功为 OK，失败为失败详情
+    private String tipMsg;
+
+    // 是否执行成功
+    private boolean success;
+}
