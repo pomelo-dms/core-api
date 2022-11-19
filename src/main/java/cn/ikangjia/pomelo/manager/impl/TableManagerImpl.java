@@ -1,6 +1,7 @@
 package cn.ikangjia.pomelo.manager.impl;
 
 import cn.ikangjia.pomelo.api.dto.table.ColumnCreateDTO;
+import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.core.ExecuteHandler;
 import cn.ikangjia.pomelo.core.entity.TableEntity;
@@ -58,6 +59,15 @@ public class TableManagerImpl implements TableManager {
     @Override
     public Boolean dropTable(Long dataSourceId, String databaseName, String tableName) {
         String sql = String.format(TableSQL.table_drop, databaseName, tableName);
+        handler.execute(sql);
+        return true;
+    }
+
+    @Override
+    public Boolean renameTable(Long dataSourceId, RenameDTO renameDTO) {
+
+        String sql = String.format(TableSQL.table_rename, renameDTO.getOldTableName(), renameDTO.getTableName());
+        handler.execute("use "  + renameDTO.getDatabaseName());
         handler.execute(sql);
         return true;
     }

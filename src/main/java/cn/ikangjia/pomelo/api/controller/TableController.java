@@ -1,12 +1,12 @@
 package cn.ikangjia.pomelo.api.controller;
 
-import cn.ikangjia.pomelo.api.dto.TableDTO;
+import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
+import cn.ikangjia.pomelo.api.dto.table.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
-import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.service.TableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -102,12 +102,14 @@ public class TableController {
 //    public ResultVO<Void> createSimilarTable(TableDTO tableDTO) {
 //        return ResultVO.success(null);
 //    }
-//
-//    @ApiOperation(value = "重命名表")
-//    @PutMapping("/rename")
-//    public ResultVO<Void> renameTable(TableDTO tableDTO) {
-//        return ResultVO.success(null);
-//    }
+
+    @ApiOperation(value = "重命名表")
+    @PutMapping("/rename")
+    public ResultVO<Boolean> renameTable(@RequestBody RenameDTO renameDTO) {
+        return Optional.ofNullable(tableService.renameTable(renameDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
 
     @ApiOperation(value = "表数据查询")
     @GetMapping("/data")

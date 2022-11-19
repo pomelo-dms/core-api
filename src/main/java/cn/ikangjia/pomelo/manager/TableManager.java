@@ -1,5 +1,6 @@
 package cn.ikangjia.pomelo.manager;
 
+import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 
 /**
@@ -15,4 +16,6 @@ public interface TableManager {
     Boolean truncateTable(Long dataSourceId, String databaseName, String tableName);
 
     Boolean dropTable(Long dataSourceId, String databaseName, String tableName);
+
+    Boolean renameTable(Long dataSourceId, RenameDTO renameDTO);
 }

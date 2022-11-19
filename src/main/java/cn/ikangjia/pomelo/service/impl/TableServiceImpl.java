@@ -1,6 +1,7 @@
 package cn.ikangjia.pomelo.service.impl;
 
-import cn.ikangjia.pomelo.api.dto.TableDTO;
+import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
+import cn.ikangjia.pomelo.api.dto.table.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
@@ -83,5 +84,10 @@ public class TableServiceImpl implements TableService {
     @Override
     public Boolean dropTable(TableDTO tableDTO) {
         return tableManager.dropTable(tableDTO.getDataSourceId(), tableDTO.getDatabaseName(), tableDTO.getTableName());
+    }
+
+    @Override
+    public Boolean renameTable(RenameDTO renameDTO) {
+        return tableManager.renameTable(renameDTO.getDataSourceId(), renameDTO);
     }
 }

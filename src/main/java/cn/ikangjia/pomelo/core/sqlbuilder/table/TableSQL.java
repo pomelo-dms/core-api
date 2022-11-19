@@ -29,6 +29,9 @@ public interface TableSQL {
 
     String table_drop = "drop table %s.%s;";
 
+    // RENAME TABLE old_table_name TO new_table_name;
+    String table_rename = "RENAME TABLE %s TO %s;";
+
     /*
      * https://www.yiibai.com/mysql/create-table.html
      * CREATE TABLE [IF NOT EXISTS] table_name(
