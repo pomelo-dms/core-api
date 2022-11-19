@@ -1,5 +1,6 @@
 package cn.ikangjia.pomelo.service;
 
+import cn.ikangjia.pomelo.api.dto.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
@@ -28,4 +29,10 @@ public interface TableService {
     String createTable(TableCreateDTO tableCreateDTO);
 
     List<String> listDataTypes();
+
+    Boolean clearTable(TableDTO tableDTO);
+
+    Boolean truncateTable(TableDTO tableDTO);
+
+    Boolean dropTable(TableDTO tableDTO);
 }

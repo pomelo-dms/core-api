@@ -9,4 +9,10 @@ import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
  */
 public interface TableManager {
     void createTable(long dataSourceId, TableCreateDTO tableCreateDTO);
+
+    Boolean clearTable(Long dataSourceId, String databaseName, String tableName);
+
+    Boolean truncateTable(Long dataSourceId, String databaseName, String tableName);
+
+    Boolean dropTable(Long dataSourceId, String databaseName, String tableName);
 }

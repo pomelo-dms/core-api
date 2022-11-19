@@ -23,6 +23,12 @@ public interface TableSQL {
             select count(*) as total from %s.%s where 1 = 1;
             """;
 
+    String table_clear = "delete * from %s.%s";
+
+    String table_truncate = "truncate %s.%s;";
+
+    String table_drop = "drop table %s.%s;";
+
     /*
      * https://www.yiibai.com/mysql/create-table.html
      * CREATE TABLE [IF NOT EXISTS] table_name(

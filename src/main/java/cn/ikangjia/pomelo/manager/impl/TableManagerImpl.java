@@ -4,6 +4,7 @@ import cn.ikangjia.pomelo.api.dto.table.ColumnCreateDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.core.ExecuteHandler;
 import cn.ikangjia.pomelo.core.entity.TableEntity;
+import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQLBuilder;
 import cn.ikangjia.pomelo.manager.TableManager;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,26 @@ public class TableManagerImpl implements TableManager {
 
         String sql = TableSQLBuilder.getCreateSQL(tableEntity, columnDTOList);
         handler.execute(sql);
+    }
+
+    @Override
+    public Boolean clearTable(Long dataSourceId, String databaseName, String tableName) {
+        String sql = String.format(TableSQL.table_clear, databaseName, tableName);
+        handler.execute(sql);
+        return true;
+    }
+
+    @Override
+    public Boolean truncateTable(Long dataSourceId, String databaseName, String tableName) {
+        String sql = String.format(TableSQL.table_truncate, databaseName, tableName);
+        handler.execute(sql);
+        return true;
+    }
+
+    @Override
+    public Boolean dropTable(Long dataSourceId, String databaseName, String tableName) {
+        String sql = String.format(TableSQL.table_drop, databaseName, tableName);
+        handler.execute(sql);
+        return true;
     }
 }

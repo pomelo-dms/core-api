@@ -44,12 +44,14 @@ public class TableController {
 //    public ResultVO<Void> getTableInfo(TableDTO tableDTO) {
 //        return ResultVO.success(null);
 //    }
-//
-//    @ApiOperation(value = "删除表")
-//    @DeleteMapping
-//    public ResultVO<Void> dropTable(TableDTO tableDTO) {
-//        return ResultVO.success(null);
-//    }
+
+    @ApiOperation(value = "删除表")
+    @DeleteMapping
+    public ResultVO<Boolean> dropTable(TableDTO tableDTO) {
+        return Optional.ofNullable(tableService.dropTable(tableDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
 //
 //    @ApiOperation(value = "修改表：更难更难")
 //    @PutMapping
@@ -73,25 +75,21 @@ public class TableController {
                 .orElseThrow();
     }
 
-//    @ApiOperation(value = "获取列字段数据类型列表")
-//    @PostMapping
-//    public ResultVO<String> listColumnType(@RequestBody TableCreateDTO tableCreateDTO) {
-//        return Optional.ofNullable(tableService.createTable(tableCreateDTO))
-//                .map(ResultVO::success)
-//                .orElseThrow();
-//    }
-//
-//    @ApiOperation(value = "截断表")
-//    @DeleteMapping("/truncate")
-//    public ResultVO<Void> truncateTable(Long dataSourceId, String databaseName) {
-//        return ResultVO.success(null);
-//    }
-//
-//    @ApiOperation(value = "清空表")
-//    @DeleteMapping("/clear")
-//    public ResultVO<Void> clearTable(TableDTO tableDTO) {
-//        return ResultVO.success(null);
-//    }
+    @ApiOperation(value = "截断表")
+    @DeleteMapping("/truncate")
+    public ResultVO<Boolean> truncateTable(TableDTO tableDTO) {
+        return Optional.ofNullable(tableService.truncateTable(tableDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
+
+    @ApiOperation(value = "清空表")
+    @DeleteMapping("/clear")
+    public ResultVO<Boolean> clearTable(TableDTO tableDTO) {
+        return Optional.ofNullable(tableService.clearTable(tableDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
 //
 //    @ApiOperation(value = "获取建表 DDL 语句")
 //    @GetMapping("/ddl")

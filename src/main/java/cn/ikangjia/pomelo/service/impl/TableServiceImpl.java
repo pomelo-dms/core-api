@@ -1,5 +1,6 @@
 package cn.ikangjia.pomelo.service.impl;
 
+import cn.ikangjia.pomelo.api.dto.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
@@ -67,5 +68,20 @@ public class TableServiceImpl implements TableService {
     public List<String> listDataTypes() {
         List<TableSQL.DataTypeEnum> allDataTypes = TableSQL.DataTypeEnum.getAllDataTypes();
         return allDataTypes.stream().map(TableSQL.DataTypeEnum::getDataType).toList();
+    }
+
+    @Override
+    public Boolean clearTable(TableDTO tableDTO) {
+        return tableManager.clearTable(tableDTO.getDataSourceId(), tableDTO.getDatabaseName(), tableDTO.getTableName());
+    }
+
+    @Override
+    public Boolean truncateTable(TableDTO tableDTO) {
+        return tableManager.truncateTable(tableDTO.getDataSourceId(), tableDTO.getDatabaseName(), tableDTO.getTableName());
+    }
+
+    @Override
+    public Boolean dropTable(TableDTO tableDTO) {
+        return tableManager.dropTable(tableDTO.getDataSourceId(), tableDTO.getDatabaseName(), tableDTO.getTableName());
     }
 }
