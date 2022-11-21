@@ -26,7 +26,7 @@ public class SQLConsoleServiceImpl implements SQLConsoleService {
     }
 
     @Override
-    public void executeSQL(ExecuteDTO executeDTO) {
+    public List<SQLResultEntity> executeSQL(ExecuteDTO executeDTO) {
         Long dataSourceId = executeDTO.getDataSourceId();
         String databaseName = executeDTO.getDatabaseName();
         String sqlStr = executeDTO.getSqlStr();

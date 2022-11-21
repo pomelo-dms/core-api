@@ -9,10 +9,12 @@ import lombok.Data;
  */
 @Data
 public class SQLResultEntity {
+    // 以下三个信息根据 sqlType 的不同（1、2、3）三选一
     public final static String OK = "> OK";
     public final static String affected_rows = "> Affected Rows: %s";
-    public final static String time_consume = "> Time use: %ss";
     public final static String error_msg = "> %s - %s";
+
+    public final static String time_consume = "> Time use: %ss";
 
     // execute(sql) 返回 true，即为有结果集
     public final static int have_resultSet = 1;
