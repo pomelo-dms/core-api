@@ -34,6 +34,9 @@ public class SQLConsoleServiceImpl implements SQLConsoleService {
         // 拆分并校验 SQL 语句
         List<String> sqlList = handleSQLStr(sqlStr);
         List<SQLResultEntity> sqlResultEntityList = sqlManager.executeSQLBatch(dataSourceId, databaseName, sqlList);
+
+        // 结果进一步处理
+        System.out.println(sqlResultEntityList);
     }
 
     private List<String> handleSQLStr(String sqlStr) {
