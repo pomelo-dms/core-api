@@ -28,6 +28,10 @@ public class ExecuteHandler {
         this.jdbcThreadLocal = jdbcThreadLocal;
     }
 
+    public Connection getConnection() {
+        return jdbcThreadLocal.getContext();
+    }
+
     /**
      * 可用于执行任何 SQL 语句，返回一个 boolean 值，表明执行该 SQL 语句是否返回了 ResultSet
      *

@@ -8,7 +8,7 @@ import lombok.Data;
  * @since 2022/11/18 16:53
  */
 @Data
-public class SqlResultEntity {
+public class SQLResultEntity {
     public final static String OK = "> OK";
     public final static String affected_rows = "> Affected Rows: %s";
     public final static String time_consume = "> Time use: %ss";
@@ -30,10 +30,10 @@ public class SqlResultEntity {
     private String sql;
 
     // SQL 语句类型，有结果集的为 1，没结果集的为 2
-    private String sqlType;
+    private Integer sqlType;
 
     // 受影响行数
-    private String effectRow;
+    private Integer effectRow;
 
     // 耗时：0.23
     private String timeConsume;
@@ -43,7 +43,6 @@ public class SqlResultEntity {
 
     // 有结果集的，解析结果集数据于此
     private DataEntity dataEntity;
-
 
     // 执行结果信息，成功为 OK，失败为失败详情
     private String tipMsg;
