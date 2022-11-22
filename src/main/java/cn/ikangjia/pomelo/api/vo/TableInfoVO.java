@@ -11,18 +11,15 @@ import java.time.LocalDateTime;
  */
 @Data
 public class TableInfoVO {
-    private String tableName;
     private String databaseName;
-
-    private String engine;
+    private String tableName;
+    private String tableType;
     private String dataLength;
-
+    private String engine;
+    private String createTime;
+    private String updateTime;
     private String collation;
-
     private String comment;
-
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
 
     private String rowNum; // 数据行数
     private String tableDDL;

@@ -17,7 +17,7 @@ public class TableSQLBuilder {
 
 
     public static String getCreateSQL(TableEntity tableEntity, List<ColumnCreateDTO> columnDTOList) {
-        String databaseName = tableEntity.getDbName();
+        String databaseName = tableEntity.getDatabaseName();
         String tableName = tableEntity.getTableName();
         String comment = tableEntity.getComment();
         String engine = tableEntity.getEngine();

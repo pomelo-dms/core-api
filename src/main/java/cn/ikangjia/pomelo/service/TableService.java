@@ -4,6 +4,7 @@ import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
+import cn.ikangjia.pomelo.api.vo.TableInfoVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
 
@@ -37,4 +38,6 @@ public interface TableService {
     Boolean dropTable(TableDTO tableDTO);
 
     Boolean renameTable(RenameDTO renameDTO);
+
+    TableInfoVO getTableInfo(TableDTO tableDTO);
 }

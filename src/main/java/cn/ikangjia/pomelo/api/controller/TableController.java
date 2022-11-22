@@ -5,6 +5,7 @@ import cn.ikangjia.pomelo.api.dto.table.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
+import cn.ikangjia.pomelo.api.vo.TableInfoVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
 import cn.ikangjia.pomelo.service.TableService;
@@ -38,12 +39,14 @@ public class TableController {
                 .map(ResultVO::success)
                 .orElseThrow();
     }
-//
-//    @ApiOperation(value = "表对象信息查询")
-//    @GetMapping("/tableInfo")
-//    public ResultVO<Void> getTableInfo(TableDTO tableDTO) {
-//        return ResultVO.success(null);
-//    }
+
+    @ApiOperation(value = "表对象信息查询")
+    @GetMapping("/tableInfo")
+    public ResultVO<TableInfoVO> getTableInfo(TableDTO tableDTO) {
+        return Optional.of(tableService.getTableInfo(tableDTO))
+                .map(ResultVO::success)
+                .get();
+    }
 
     @ApiOperation(value = "删除表")
     @DeleteMapping

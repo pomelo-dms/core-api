@@ -4,10 +4,12 @@ import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
+import cn.ikangjia.pomelo.api.vo.TableInfoVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
 import cn.ikangjia.pomelo.common.util.TreeUtil;
 import cn.ikangjia.pomelo.core.entity.DataEntity;
+import cn.ikangjia.pomelo.core.entity.TableEntity;
 import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import cn.ikangjia.pomelo.manager.TableManager;
@@ -89,5 +91,13 @@ public class TableServiceImpl implements TableService {
     @Override
     public Boolean renameTable(RenameDTO renameDTO) {
         return tableManager.renameTable(renameDTO.getDataSourceId(), renameDTO);
+    }
+
+    @Override
+    public TableInfoVO getTableInfo(TableDTO tableDTO) {
+        return tableManager.getTableInfo(
+                tableDTO.getDataSourceId(),
+                tableDTO.getDatabaseName(),
+                tableDTO.getTableName());
     }
 }
