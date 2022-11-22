@@ -114,7 +114,7 @@ public class TableController {
                 .orElseThrow();
     }
 
-    @ApiOperation(value = "表数据查询")
+    @ApiOperation(value = "表数据查询（打开表）")
     @GetMapping("/data")
     public ResultVO<DataShowVO> showData(Long dataSourceId, String databaseName, String tableName, Integer pageSize, Integer pageNum) {
         DataQuery dataQuery = new DataQuery();
