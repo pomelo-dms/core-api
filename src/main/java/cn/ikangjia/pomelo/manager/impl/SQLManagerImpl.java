@@ -37,11 +37,10 @@ public class SQLManagerImpl implements SQLManager {
         } catch (SQLException e) {
             throw new DMSException("获取数据源[" + dataSourceId + "]失败：" + e.getMessage());
         }
+
         List<SQLResultEntity> result = new ArrayList<>();
 
-        sqlList.forEach(sql -> {
-            result.add(executeSQLSingle(connection, sql));
-        });
+        sqlList.forEach(sql -> result.add(executeSQLSingle(connection, sql)));
 
         return result;
     }
@@ -54,7 +53,8 @@ public class SQLManagerImpl implements SQLManager {
         try (Statement statement = connection.createStatement()) {  // SQL  正常执行
             long startTime = System.currentTimeMillis();  // 开始时间
 
-            boolean hasResultSet = statement.execute(sql);  // 执行 SQL
+            // 执行 SQL，执行结果为 true 则有结果集，false 则无结果集
+            boolean hasResultSet = statement.execute(sql);
 
             long endTime = System.currentTimeMillis();  // 结束时间
 
@@ -62,11 +62,10 @@ public class SQLManagerImpl implements SQLManager {
             long time = endTime - startTime;
             String timeConsume = String.valueOf(((double) time) / 1000);
             String timeConsumeInfo = String.format(SQLResultEntity.time_consume, timeConsume);
-
             sqlResult.setTimeConsume(timeConsume);
             sqlResult.setTimeConsumeInfo(timeConsumeInfo);
 
-            if (hasResultSet) { // 有结果集的
+            if (hasResultSet) { // 该分支处理带结果集的 SQL 执行
                 sqlResult.setSqlType(SQLResultEntity.have_resultSet);  // sql 类型视之为 1，即有结果集
 
                 // 解析结果集
@@ -98,7 +97,7 @@ public class SQLManagerImpl implements SQLManager {
                 dataEntity.setDataMapList(dataMapList);
 
                 sqlResult.setDataEntity(dataEntity);
-            } else {  // 无结果集
+            } else {  // 该分支处理不带结果集的 SQL 执行
                 sqlResult.setSqlType(SQLResultEntity.no_have_resultSet);
                 int updateCount = statement.getUpdateCount();
                 if (updateCount <= 0) {
@@ -110,10 +109,12 @@ public class SQLManagerImpl implements SQLManager {
                 }
             }
             sqlResult.setSuccess(true);
-        } catch (SQLException e) {  // SQL  执行出错
+        } catch (SQLException e) {  // 该语句块用于封装 SQL 执行出错时的错误信息
             sqlResult.setSuccess(false);
             sqlResult.setSqlType(SQLResultEntity.execute_error);
             sqlResult.setTimeConsumeInfo(String.format(SQLResultEntity.time_consume, 0));
+
+            // "tipMsg": "> 1049 - Unknown database 'db_xxx'",
             sqlResult.setTipMsg(String.format(SQLResultEntity.error_msg, e.getErrorCode(), e.getLocalizedMessage()));
         }
         return sqlResult;
