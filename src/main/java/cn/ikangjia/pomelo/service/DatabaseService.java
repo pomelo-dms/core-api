@@ -5,7 +5,6 @@ import cn.ikangjia.pomelo.api.dto.DatabaseAlterDTO;
 import cn.ikangjia.pomelo.api.vo.DatabaseInfoVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.core.entity.CharacterSetEntity;
-import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 
 import java.util.List;
 
@@ -30,4 +29,6 @@ public interface DatabaseService {
     List<CharacterSetEntity> getCharacterSets(Long dataSourceId);
 
     List<String> getCollations(Long dataSourceId, String characterSet);
+
+    DatabaseAlterDTO defaultCharacter(Long dataSourceId, String databaseName);
 }

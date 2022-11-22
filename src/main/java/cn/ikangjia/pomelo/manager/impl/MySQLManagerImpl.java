@@ -59,8 +59,8 @@ public class MySQLManagerImpl implements MySQLManager {
     }
 
     @Override
-    public void alterDatabase(long dataSourceId, String databaseName, String collation) {
-        String sql = String.format(DatabaseSQL.database_alter, databaseName, collation);
+    public void alterDatabase(long dataSourceId, String databaseName, String characterSet, String collation) {
+        String sql = String.format(DatabaseSQL.database_alter, databaseName, characterSet, collation);
         log.info("修改数据库:{}", sql);
         handler.execute(sql);
     }

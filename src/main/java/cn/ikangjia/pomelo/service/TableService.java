@@ -1,10 +1,12 @@
 package cn.ikangjia.pomelo.service;
 
+import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
+import cn.ikangjia.pomelo.api.dto.table.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
+import cn.ikangjia.pomelo.api.vo.TableInfoVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
-import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 
 import java.util.List;
 
@@ -28,4 +30,14 @@ public interface TableService {
     String createTable(TableCreateDTO tableCreateDTO);
 
     List<String> listDataTypes();
+
+    Boolean clearTable(TableDTO tableDTO);
+
+    Boolean truncateTable(TableDTO tableDTO);
+
+    Boolean dropTable(TableDTO tableDTO);
+
+    Boolean renameTable(RenameDTO renameDTO);
+
+    TableInfoVO getTableInfo(TableDTO tableDTO);
 }

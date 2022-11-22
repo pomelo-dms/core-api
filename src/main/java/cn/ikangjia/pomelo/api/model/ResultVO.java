@@ -25,7 +25,7 @@ public class ResultVO<T> {
     }
 
     public static <T> ResultVO<T> success(T data) {
-        return new ResultVO<>(0, data, null);
+        return new ResultVO<>(0, data, "操作成功");
     }
 
     public static <T> ResultVO<T> error(String msg) {

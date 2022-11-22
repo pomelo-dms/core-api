@@ -1,11 +1,15 @@
 package cn.ikangjia.pomelo.service.impl;
 
+import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
+import cn.ikangjia.pomelo.api.dto.table.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
+import cn.ikangjia.pomelo.api.vo.TableInfoVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
 import cn.ikangjia.pomelo.common.util.TreeUtil;
 import cn.ikangjia.pomelo.core.entity.DataEntity;
+import cn.ikangjia.pomelo.core.entity.TableEntity;
 import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.manager.MySQLManager;
 import cn.ikangjia.pomelo.manager.TableManager;
@@ -67,5 +71,33 @@ public class TableServiceImpl implements TableService {
     public List<String> listDataTypes() {
         List<TableSQL.DataTypeEnum> allDataTypes = TableSQL.DataTypeEnum.getAllDataTypes();
         return allDataTypes.stream().map(TableSQL.DataTypeEnum::getDataType).toList();
+    }
+
+    @Override
+    public Boolean clearTable(TableDTO tableDTO) {
+        return tableManager.clearTable(tableDTO.getDataSourceId(), tableDTO.getDatabaseName(), tableDTO.getTableName());
+    }
+
+    @Override
+    public Boolean truncateTable(TableDTO tableDTO) {
+        return tableManager.truncateTable(tableDTO.getDataSourceId(), tableDTO.getDatabaseName(), tableDTO.getTableName());
+    }
+
+    @Override
+    public Boolean dropTable(TableDTO tableDTO) {
+        return tableManager.dropTable(tableDTO.getDataSourceId(), tableDTO.getDatabaseName(), tableDTO.getTableName());
+    }
+
+    @Override
+    public Boolean renameTable(RenameDTO renameDTO) {
+        return tableManager.renameTable(renameDTO.getDataSourceId(), renameDTO);
+    }
+
+    @Override
+    public TableInfoVO getTableInfo(TableDTO tableDTO) {
+        return tableManager.getTableInfo(
+                tableDTO.getDataSourceId(),
+                tableDTO.getDatabaseName(),
+                tableDTO.getTableName());
     }
 }

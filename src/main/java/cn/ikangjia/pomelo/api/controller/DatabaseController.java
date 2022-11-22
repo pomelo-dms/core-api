@@ -6,7 +6,6 @@ import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.vo.DatabaseInfoVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.core.entity.CharacterSetEntity;
-import cn.ikangjia.pomelo.core.entity.DatabaseEntity;
 import cn.ikangjia.pomelo.service.DatabaseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -82,10 +81,18 @@ public class DatabaseController {
                 .orElseThrow();
     }
 
-    @ApiOperation(value = "更新数据库")
+    @ApiOperation(value = "更新数据库（修改字符集）")
     @PutMapping
     public ResultVO<Boolean> alterDatabase(@RequestBody DatabaseAlterDTO alterDTO) {
         return Optional.ofNullable(databaseService.alterDatabase(alterDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
+
+    @ApiOperation(value = "获取数据库默认的字符集和校验规则")
+    @GetMapping("/defaultCharacter")
+    public ResultVO<DatabaseAlterDTO> defaultCharacter(Long dataSourceId, String databaseName) {
+        return Optional.ofNullable(databaseService.defaultCharacter(dataSourceId, databaseName))
                 .map(ResultVO::success)
                 .orElseThrow();
     }

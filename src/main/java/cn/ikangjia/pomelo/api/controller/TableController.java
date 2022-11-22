@@ -1,12 +1,13 @@
 package cn.ikangjia.pomelo.api.controller;
 
-import cn.ikangjia.pomelo.api.dto.TableDTO;
+import cn.ikangjia.pomelo.api.dto.table.RenameDTO;
+import cn.ikangjia.pomelo.api.dto.table.TableDTO;
 import cn.ikangjia.pomelo.api.dto.table.TableCreateDTO;
 import cn.ikangjia.pomelo.api.model.ResultVO;
 import cn.ikangjia.pomelo.api.query.DataQuery;
+import cn.ikangjia.pomelo.api.vo.TableInfoVO;
 import cn.ikangjia.pomelo.api.vo.TreeVO;
 import cn.ikangjia.pomelo.api.vo.data.DataShowVO;
-import cn.ikangjia.pomelo.core.sqlbuilder.table.TableSQL;
 import cn.ikangjia.pomelo.service.TableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,18 +39,22 @@ public class TableController {
                 .map(ResultVO::success)
                 .orElseThrow();
     }
-//
-//    @ApiOperation(value = "表对象信息查询")
-//    @GetMapping("/tableInfo")
-//    public ResultVO<Void> getTableInfo(TableDTO tableDTO) {
-//        return ResultVO.success(null);
-//    }
-//
-//    @ApiOperation(value = "删除表")
-//    @DeleteMapping
-//    public ResultVO<Void> dropTable(TableDTO tableDTO) {
-//        return ResultVO.success(null);
-//    }
+
+    @ApiOperation(value = "表对象信息查询")
+    @GetMapping("/tableInfo")
+    public ResultVO<TableInfoVO> getTableInfo(TableDTO tableDTO) {
+        return Optional.of(tableService.getTableInfo(tableDTO))
+                .map(ResultVO::success)
+                .get();
+    }
+
+    @ApiOperation(value = "删除表")
+    @DeleteMapping
+    public ResultVO<Boolean> dropTable(TableDTO tableDTO) {
+        return Optional.ofNullable(tableService.dropTable(tableDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
 //
 //    @ApiOperation(value = "修改表：更难更难")
 //    @PutMapping
@@ -73,25 +78,21 @@ public class TableController {
                 .orElseThrow();
     }
 
-//    @ApiOperation(value = "获取列字段数据类型列表")
-//    @PostMapping
-//    public ResultVO<String> listColumnType(@RequestBody TableCreateDTO tableCreateDTO) {
-//        return Optional.ofNullable(tableService.createTable(tableCreateDTO))
-//                .map(ResultVO::success)
-//                .orElseThrow();
-//    }
-//
-//    @ApiOperation(value = "截断表")
-//    @DeleteMapping("/truncate")
-//    public ResultVO<Void> truncateTable(Long dataSourceId, String databaseName) {
-//        return ResultVO.success(null);
-//    }
-//
-//    @ApiOperation(value = "清空表")
-//    @DeleteMapping("/clear")
-//    public ResultVO<Void> clearTable(TableDTO tableDTO) {
-//        return ResultVO.success(null);
-//    }
+    @ApiOperation(value = "截断表")
+    @DeleteMapping("/truncate")
+    public ResultVO<Boolean> truncateTable(TableDTO tableDTO) {
+        return Optional.ofNullable(tableService.truncateTable(tableDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
+
+    @ApiOperation(value = "清空表")
+    @DeleteMapping("/clear")
+    public ResultVO<Boolean> clearTable(TableDTO tableDTO) {
+        return Optional.ofNullable(tableService.clearTable(tableDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
 //
 //    @ApiOperation(value = "获取建表 DDL 语句")
 //    @GetMapping("/ddl")
@@ -104,14 +105,16 @@ public class TableController {
 //    public ResultVO<Void> createSimilarTable(TableDTO tableDTO) {
 //        return ResultVO.success(null);
 //    }
-//
-//    @ApiOperation(value = "重命名表")
-//    @PutMapping("/rename")
-//    public ResultVO<Void> renameTable(TableDTO tableDTO) {
-//        return ResultVO.success(null);
-//    }
 
-    @ApiOperation(value = "表数据查询")
+    @ApiOperation(value = "重命名表")
+    @PutMapping("/rename")
+    public ResultVO<Boolean> renameTable(@RequestBody RenameDTO renameDTO) {
+        return Optional.ofNullable(tableService.renameTable(renameDTO))
+                .map(ResultVO::success)
+                .orElseThrow();
+    }
+
+    @ApiOperation(value = "表数据查询（打开表）")
     @GetMapping("/data")
     public ResultVO<DataShowVO> showData(Long dataSourceId, String databaseName, String tableName, Integer pageSize, Integer pageNum) {
         DataQuery dataQuery = new DataQuery();

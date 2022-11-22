@@ -1,14 +1,16 @@
-package cn.ikangjia.pomelo.core.entity;
+package cn.ikangjia.pomelo.api.vo;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
- * @author kangJia
+ * @author kangjia
  * @email ikangjia.cn@outlook.com
- * @since 2022/10/9 14:35
+ * @since 2022/11/22 9:55
  */
 @Data
-public class TableEntity {
+public class TableInfoVO {
     private String databaseName;
     private String tableName;
     private String tableType;
@@ -18,4 +20,7 @@ public class TableEntity {
     private String updateTime;
     private String collation;
     private String comment;
+
+    private String rowNum; // 数据行数
+    private String tableDDL;
 }

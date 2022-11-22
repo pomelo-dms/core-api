@@ -74,7 +74,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     @Override
     public Boolean alterDatabase(DatabaseAlterDTO alterDTO) {
-        mySQLManager.alterDatabase(alterDTO.getDataSourceId(), alterDTO.getDatabaseName(), alterDTO.getCollation());
+        mySQLManager.alterDatabase(alterDTO.getDataSourceId(), alterDTO.getDatabaseName(), alterDTO.getCharacterSet(), alterDTO.getCollation());
         return true;
     }
 
@@ -99,5 +99,16 @@ public class DatabaseServiceImpl implements DatabaseService {
         List<String> collationList = mySQLManager.listCollations(dataSourceId, characterSet);
         collationList.add(0, "默认");
         return collationList;
+    }
+
+    @Override
+    public DatabaseAlterDTO defaultCharacter(Long dataSourceId, String databaseName) {
+        DatabaseEntity databaseInfo = mySQLManager.getDatabaseInfo(dataSourceId, databaseName);
+        DatabaseAlterDTO result = new DatabaseAlterDTO();
+        result.setDatabaseName(databaseName);
+        result.setCharacterSet(databaseInfo.getCharacterSet());
+        result.setCollation(databaseInfo.getCollation());
+
+        return result;
     }
 }

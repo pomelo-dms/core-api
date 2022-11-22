@@ -15,6 +15,15 @@ public interface TableSQL {
             where table_schema = '%s' and table_type = 'BASE TABLE';
             """;
 
+    String table_select_info = """
+            select table_name as tableName, table_schema as databaseName, table_type as tableType,
+             engine, data_length as dataLength, create_time as createTime, update_time as updateTime,
+             table_collation as collation, table_comment as comment from information_schema.tables
+            where table_schema = '%s' and table_type = 'BASE TABLE' and table_name = '%s';
+            """;
+
+    String table_show_create = "show create table %s.%s;";
+
     String table_select_data = """
             select * from %s.%s where 1 = 1 limit %s, %s;
             """;
@@ -22,6 +31,15 @@ public interface TableSQL {
     String table_Row_count = """
             select count(*) as total from %s.%s where 1 = 1;
             """;
+
+    String table_clear = "delete * from %s.%s";
+
+    String table_truncate = "truncate %s.%s;";
+
+    String table_drop = "drop table %s.%s;";
+
+    // RENAME TABLE old_table_name TO new_table_name;
+    String table_rename = "RENAME TABLE %s TO %s;";
 
     /*
      * https://www.yiibai.com/mysql/create-table.html
