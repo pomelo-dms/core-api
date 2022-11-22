@@ -82,7 +82,7 @@ public class DatabaseController {
                 .orElseThrow();
     }
 
-    @ApiOperation(value = "更新数据库")
+    @ApiOperation(value = "更新数据库（修改字符集）")
     @PutMapping
     public ResultVO<Boolean> alterDatabase(@RequestBody DatabaseAlterDTO alterDTO) {
         return Optional.ofNullable(databaseService.alterDatabase(alterDTO))

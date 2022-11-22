@@ -14,7 +14,7 @@ public interface DatabaseSQL {
 
     String database_drop = "drop database %s;";
 
-    String database_alter = "alter schema '%s' collate '%s';";
+    String database_alter = "alter schema '%s' default character set '%s' default collate '%s';";
 
     String database_create_1 = "create database %s;";
     String database_create_2 = "create database %s default character set %s;";

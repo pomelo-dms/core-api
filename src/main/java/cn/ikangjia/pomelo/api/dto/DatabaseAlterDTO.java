@@ -11,5 +11,6 @@ import lombok.Data;
 public class DatabaseAlterDTO {
     private Long dataSourceId;
     private String databaseName;
+    private String characterSet;
     private String collation;
 }
