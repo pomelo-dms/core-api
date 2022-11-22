@@ -37,6 +37,7 @@ public class SQLConsoleServiceImpl implements SQLConsoleService {
 
         // 结果进一步处理
         System.out.println(sqlResultEntityList);
+        return sqlResultEntityList;
     }
 
     private List<String> handleSQLStr(String sqlStr) {

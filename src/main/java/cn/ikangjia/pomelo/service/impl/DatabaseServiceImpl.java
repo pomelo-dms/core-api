@@ -100,4 +100,15 @@ public class DatabaseServiceImpl implements DatabaseService {
         collationList.add(0, "默认");
         return collationList;
     }
+
+    @Override
+    public DatabaseAlterDTO defaultCharacter(Long dataSourceId, String databaseName) {
+        DatabaseEntity databaseInfo = mySQLManager.getDatabaseInfo(dataSourceId, databaseName);
+        DatabaseAlterDTO result = new DatabaseAlterDTO();
+        result.setDatabaseName(databaseName);
+        result.setCharacterSet(databaseInfo.getCharacterSet());
+        result.setCollation(databaseInfo.getCollation());
+
+        return result;
+    }
 }
